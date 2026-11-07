@@ -1,0 +1,1254 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Método Socrático</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;1,500&family=Caveat:wght@500;700&family=Permanent+Marker&family=IBM+Plex+Mono:wght@400;500&family=Saira:wght@300;400;500&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap">
+<style>
+/* Layout: pôster vertical — título em caixas, faixa laranja de prontuário, atos como fichas, papel preto amassado ao fundo */
+:root{
+  --paper:#0b0603;
+  --paper-2:#171413;
+  --ink:#f3e6d6;
+  --muted:#b39a80;
+  --orange:#ffb04a;
+  --orange-hi:#ffe2b8;
+  --amber:#ffd27a;
+  --line:rgba(236,228,220,.55);
+  --f-display:"Saira","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-read:"Source Serif 4",Georgia,serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
+  overflow-x:hidden;
+}
+/* papel amassado */
+.crumple{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900'><filter id='c'><feTurbulence type='fractalNoise' baseFrequency='.008 .012' numOctaves='5' seed='7'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='6' diffuseConstant='1'><feDistantLight azimuth='225' elevation='38'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23c)'/></svg>");
+  background-size:900px 900px;opacity:.09;mix-blend-mode:screen}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.18;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+#scratch{position:fixed;inset:0;z-index:1;pointer-events:none;width:100%;height:100%}
+main{position:relative;z-index:2}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* HERO */
+.hero{padding-block:56px 40px}
+.epi{display:grid;gap:28px;justify-items:end;text-align:right;color:var(--orange-hi);font-size:19px;line-height:1.4;max-width:320px;margin-left:auto;margin-top:24px}
+.epi p{margin:0}
+.epi b{font-weight:700;font-style:italic}
+.title{font-family:var(--f-display);font-weight:400;color:var(--orange);text-transform:uppercase;margin:44px 0 0;line-height:1}
+.word{display:flex;align-items:center;gap:.08em;font-size:clamp(40px,10.5vw,92px);letter-spacing:.09em}
+.word .box{display:inline-grid;place-items:center;width:1.18em;height:1.18em;border:3px solid var(--orange);padding-left:.06em;margin-right:.08em;flex:none}
+.word .rest{border-bottom:3px solid var(--orange);padding-bottom:.08em;line-height:1;align-self:flex-end;margin-bottom:-.06em}
+.word + .word{margin-top:.32em}
+.word.second{padding-left:clamp(0px,8vw,90px)}
+.byline{font-family:var(--f-display);letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--muted);margin-top:28px}
+.byline a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--orange)}
+
+/* FAIXA */
+.band{position:relative;margin:0;background:#c8501a;overflow:hidden;line-height:0}
+.band img{display:block;width:100%;height:auto;max-width:100%;aspect-ratio:1550/540;object-fit:cover}
+.band::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 40px rgba(15,13,12,.35);pointer-events:none}
+.tag{position:absolute;right:max(16px,env(safe-area-inset-right,0px));top:14px;font-size:13px;line-height:1;color:rgba(255,244,220,.75);font-family:var(--f-body);z-index:1}
+
+/* SEÇÕES */
+section.block{padding-block:64px 8px}
+.label{font-family:var(--f-display);font-size:clamp(22px,4.4vw,30px);font-weight:300;letter-spacing:.06em;text-transform:uppercase;color:var(--orange-hi);display:flex;align-items:center;gap:16px;margin:0 0 24px}
+.label::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--orange),transparent)}
+.synopsis{display:grid;grid-template-columns:1fr 46px;gap:24px;align-items:stretch}
+.synopsis p{margin:0 0 1em;max-width:62ch;text-align:justify;hyphens:auto}
+.synopsis p:first-child::first-letter{font-family:var(--f-display);color:var(--orange);font-size:3.2em;float:left;line-height:.9;padding:.04em .12em 0 0}
+.barcode{background:repeating-linear-gradient(180deg,var(--orange) 0 2px,transparent 2px 4px,var(--orange) 4px 5px,transparent 5px 9px,var(--orange) 9px 12px,transparent 12px 14px);opacity:.8;min-height:160px}
+.warn{text-align:justify;hyphens:auto;font-size:13px;color:var(--muted);border-left:2px solid var(--orange);padding-left:12px;margin-top:8px}
+
+/* ATOS */
+.acts{display:grid;gap:40px}
+.act-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.act-num{font-family:var(--f-display);font-size:13px;letter-spacing:.3em;color:var(--orange);border:1.5px solid var(--orange);padding:4px 10px}
+.act-name{font-family:var(--f-display);font-size:clamp(22px,4.4vw,30px);font-weight:300;letter-spacing:.06em;text-transform:uppercase;margin:0}
+.case{font-size:14px;color:var(--muted);margin:6px 0 14px}
+.case i{color:var(--amber);font-style:normal}
+.chapters{list-style:none;margin:0;padding:0;border-top:1px solid rgba(140,215,250,.4)}
+.chapters li{border-bottom:1px solid rgba(140,215,250,.4)}
+.chapters button{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:14px 4px;cursor:pointer;transition:background .2s,padding .2s}
+.chapters button:hover{background:rgba(140,215,250,.1);padding-left:12px}
+.chapters button:focus-visible{outline:2px solid var(--orange-hi);outline-offset:2px}
+.ch-n{font-family:var(--f-display);color:var(--orange);font-variant-numeric:tabular-nums;letter-spacing:.1em}
+.ch-t{font-weight:600;min-width:0}
+.ch-s{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.ch-s.on{color:var(--orange-hi)}
+
+/* ELENCO */
+.cast{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0;border:1px solid rgba(140,215,250,.45)}
+.person{padding:18px;border-right:1px solid rgba(140,215,250,.25);border-bottom:1px solid rgba(140,215,250,.25);min-width:0}
+.person h3{font-family:var(--f-display);font-weight:400;text-transform:uppercase;letter-spacing:.08em;margin:0;font-size:18px;color:var(--ink)}
+.person h3 .i{display:inline-grid;place-items:center;width:1.4em;height:1.4em;border:1.5px solid var(--orange);color:var(--orange);margin-right:6px;font-size:.9em}
+.person .meta{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-hi);margin:8px 0 6px}
+.person p{margin:0;font-size:14px;color:var(--muted)}
+
+/* LEITOR */
+.reader{position:fixed;inset:0;z-index:20;background:var(--paper);overflow-y:auto;padding-top:env(safe-area-inset-top,0px)}
+.reader .bar{position:sticky;top:0;background:rgba(2,6,10,.92);backdrop-filter:blur(6px);border-bottom:1px solid rgba(140,215,250,.4);z-index:2}
+.reader .bar .wrap{display:flex;justify-content:space-between;align-items:center;padding-block:12px;gap:12px}
+.btn{all:unset;cursor:pointer;font-family:var(--f-display);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--orange-hi);border:1.5px solid var(--orange);padding:8px 14px}
+.btn:hover{background:var(--orange);color:var(--paper)}
+.btn:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.reader article{max-width:66ch;margin:0 auto;padding-block:48px 80px}
+.reader h2{font-family:var(--f-display);font-weight:400;color:var(--orange);text-transform:uppercase;letter-spacing:.08em;font-size:clamp(28px,6vw,44px);margin:6px 0 30px;text-wrap:balance}
+.reader .kicker{font-family:var(--f-display);font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted)}
+.reader p{font-family:var(--f-read);font-size:18px;line-height:1.75;text-align:justify;hyphens:auto;margin:0 0 1.1em;color:var(--ink)}
+.follow{margin-top:48px;border:1.5px solid var(--orange);padding:20px;display:grid;gap:10px}
+.follow p{font-family:var(--f-body)!important;text-align:left!important;font-size:15px!important;margin:0!important}
+.follow a{color:var(--orange-hi);font-weight:600}
+
+footer{padding-block:72px 48px;font-size:13px;color:var(--muted);text-align:center;font-family:var(--f-display);letter-spacing:.14em}
+footer a{color:var(--orange-hi);text-decoration:none}
+@media (max-width:520px){
+  .synopsis{grid-template-columns:1fr}.barcode{display:none}
+  .epi{max-width:260px;font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){.chapters button{transition:none}}
+/* ABAS */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:15;background:rgba(15,13,12,.88);backdrop-filter:blur(6px);border-bottom:1px solid rgba(140,215,250,.35)}
+.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
+.tab{all:unset;cursor:pointer;font-family:var(--f-display);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);padding:14px 12px;border-bottom:2px solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--orange-hi);border-bottom-color:var(--orange)}
+.tab:focus-visible{outline:2px solid var(--orange-hi);outline-offset:-2px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:16;background:var(--paper)}
+
+/* HOSPITAL HELENA FERETTE — colagem em meio-tom sobre papel creme */
+.hosp{
+  --h-bg:#fffdf5;--h-card:#ffffff;--h-ink:#1c2422;--h-soft:#5f625d;--h-rule:#e4ddca;
+  --h-teal:#05697b;--h-teal-c:#06879e;--h-mustard:#c87ff0;--h-aqua:#3a9e98;--h-red:#1d8a94;--h-red-dk:#0d4a50;--h-ok:#2f7d4f;--h-warn:#b5661a;
+  --f-h:"Figtree","Segoe UI",system-ui,sans-serif;--f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  position:relative;z-index:2;background:var(--h-bg);color:var(--h-ink);font-family:var(--f-h);color-scheme:light;min-height:100vh}
+.hosp::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.3;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.hosp > *{position:relative}
+.h-top{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-block:36px 8px}
+.logo-box{--lw:min(320px,62vw);position:relative;width:var(--lw);padding-bottom:calc(var(--lw)*.16)}
+.logo-img{width:100%;height:auto;display:block}
+.slogan{position:absolute;left:55.5%;top:calc(var(--lw)*.49*.80);margin:0;white-space:nowrap;font-family:var(--f-h);font-style:italic;font-weight:500;font-size:calc(var(--lw)*.043);color:#00A4C1}
+.h-band{height:56px;background:url("hhf/pattern.jpg") 0 0/auto 196px repeat-x;border-bottom:1px solid var(--h-rule)}
+.logo{display:flex;align-items:center;gap:16px;color:var(--h-teal)}
+.logo svg{width:58px;height:auto;flex:none}
+.logo .lw{font-family:var(--f-h);font-weight:500;font-size:clamp(28px,5vw,38px);line-height:1.04;letter-spacing:-.015em;display:grid}
+.h-meta{font-family:var(--f-mono);font-size:12px;color:var(--h-soft);text-align:right;line-height:1.6}
+
+.collage{position:relative;aspect-ratio:1000/460;max-width:100%;overflow:hidden;margin-block:20px 8px}
+.collage.v4a{aspect-ratio:1000/460}
+.collage.v4b{aspect-ratio:1000/420;margin-top:40px}
+.collage.v4c{aspect-ratio:1000/520;margin-bottom:40px}
+.blk{position:absolute}
+.circ{position:absolute;aspect-ratio:1;border-radius:50%;overflow:hidden;display:block}
+.circ.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.vtext{position:absolute;font-family:var(--f-mono);font-size:clamp(5px,.8vw,8px);line-height:1.25;color:#2a4a52;letter-spacing:.08em}
+.vtext.box{border:1px solid #2a4a52;padding:3px 2px}
+.nums{position:absolute;font-family:var(--f-mono);font-size:clamp(4px,.7vw,7px);line-height:1.35;color:#0d1d20;white-space:pre}
+.collage.v3b{aspect-ratio:1000/460;margin-top:40px}
+.frame{position:absolute;object-fit:cover;display:block;max-width:none}
+.v3b .frame{border:4px solid #fff}
+.lilac{position:absolute;background:#c87ff0}
+.ecg-paper{position:absolute;overflow:hidden;background-color:#f2efe6;background-image:linear-gradient(rgba(29,93,107,.3) 1px,transparent 1px),linear-gradient(90deg,rgba(29,93,107,.3) 1px,transparent 1px),linear-gradient(rgba(29,93,107,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(29,93,107,.12) 1px,transparent 1px);background-size:40px 40px,40px 40px,8px 8px,8px 8px}
+.ecg-paper pre{margin:0;padding:10px 12px;font-family:var(--f-mono);font-size:clamp(7px,1.1vw,11px);line-height:1.5;color:#8b3a22}
+.ecg-paper svg{position:absolute;left:0;right:0;bottom:18%;width:100%;height:28%}
+.ecg-paper polyline{fill:none;stroke:#1d5d6b;stroke-width:2;vector-effect:non-scaling-stroke}
+.net{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.shapes{position:absolute;inset:0;width:100%;height:100%}
+.cut{position:absolute;width:auto;max-width:none;display:block;filter:drop-shadow(0 1px 0 rgba(0,0,0,.05))}
+.ht-grey{background:radial-gradient(circle,rgba(28,36,34,.5) .9px,transparent 1.3px) 0 0/4px 4px,#bdb8ae}
+.ht-red{background:radial-gradient(circle,rgba(91,26,11,.45) 1px,transparent 1.5px) 0 0/5px 5px,var(--h-red)}
+.ht-red2{background:radial-gradient(circle,rgba(120,80,0,.25) .9px,transparent 1.3px) 0 0/4px 4px,var(--h-mustard)}
+.ht-teal{background:radial-gradient(circle,rgba(14,79,69,.45) 1px,transparent 1.4px) 0 0/5px 5px,var(--h-teal-c)}
+.tri{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:10px solid var(--h-ink);z-index:2}
+.strip{position:relative;display:flex;align-items:flex-end;gap:12px;height:300px;margin-top:44px}
+.strip .s{flex:1;min-width:0;overflow:hidden;position:relative}
+.strip img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block;filter:grayscale(1)}
+.ht-cells{background:radial-gradient(circle,transparent 9px,var(--h-red-dk) 10px 12.5px,transparent 13.5px) 0 0/30px 30px,radial-gradient(circle,rgba(91,26,11,.35) .8px,transparent 1.2px) 0 0/4px 4px,var(--h-red)}
+.strip .t1{left:4%;top:-6%}.strip .t2{left:22%;top:8%;border-bottom-color:#fff}.strip .t3{left:47%;top:20%}.strip .t4{left:70%;top:2%}
+.h-intro{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding-block:28px 12px;border-top:1px solid var(--h-rule);margin-top:28px}
+.h-intro h2{font-size:clamp(26px,4.6vw,38px);font-weight:500;line-height:1.08;margin:0;letter-spacing:-.015em;text-wrap:balance}
+.h-intro h2 em{font-style:normal;color:var(--h-red)}
+.h-intro p{margin:0;color:var(--h-soft);font-size:15.5px;line-height:1.6;max-width:52ch}
+
+.h-label{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--h-soft);border-bottom:2px solid var(--h-ink);padding-bottom:8px;margin:56px 0 20px}
+.h-label b{color:var(--h-ink);font-weight:500}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.chip{all:unset;cursor:pointer;font-size:13px;padding:6px 14px;border:1.5px solid var(--h-ink);border-radius:99px;color:var(--h-ink)}
+.chip[aria-pressed="true"]{background:var(--h-ink);color:var(--h-card)}
+.chip:focus-visible{outline:2px solid var(--h-red);outline-offset:2px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;padding-bottom:64px}
+.card{background:var(--h-card);border:1px solid var(--h-rule);display:grid;grid-template-rows:auto 1fr;min-width:0}
+.card-h{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid var(--h-rule);font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--h-soft)}
+.card-h b{color:var(--h-teal);font-weight:500}
+.card-b{display:grid;grid-template-columns:104px 1fr;gap:16px;padding:16px 14px}
+.photo{position:relative;aspect-ratio:3/4;max-width:100%;display:grid;place-items:center;overflow:hidden}
+.photo span{font-size:44px;font-weight:600;color:var(--h-card);mix-blend-mode:normal;text-shadow:0 1px 0 rgba(0,0,0,.15)}
+.photo.ht-grey span{color:var(--h-ink)}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1)}
+.photo .tri{right:8px;top:8px;transform:scale(.8)}
+.info{min-width:0}
+.info h3{margin:0;font-size:19px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+.info .role{color:var(--h-red);font-size:13.5px;margin:3px 0 10px;font-weight:500}
+.info dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:13px}
+.info dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--h-soft);padding-top:2px}
+.info dd{margin:0;font-variant-numeric:tabular-nums}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;margin-top:12px;padding:3px 10px 3px 8px;border-radius:99px;border:1px solid currentColor}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.status.ok{color:var(--h-ok)}.status.warn{color:var(--h-warn)}
+.h-foot{border-top:1px solid var(--h-rule);padding-block:24px 40px;font-family:var(--f-mono);font-size:11.5px;color:var(--h-soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.hosp ~ .tabs-fix{display:none}
+@media (max-width:620px){.h-intro{grid-template-columns:1fr}.h-meta{text-align:left}}
+@media (max-width:380px){.cards{grid-template-columns:1fr}.card-b{grid-template-columns:86px 1fr}}
+body.on-hosp{background:#fffdf5}
+body.on-hosp .crumple,body.on-hosp .grain,body.on-hosp #scratch{display:none}
+body.on-hosp .tabs{background:rgba(255,253,245,.94);border-bottom-color:#e4ddca}
+body.on-hosp .tab{color:#5f625d}
+body.on-hosp .tab[aria-selected="true"]{color:#05697b;border-bottom-color:#06879e}
+body.on-hosp::before{background:#fffdf5}
+
+/* CRACHÁS */
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:36px 22px;padding-bottom:64px;justify-items:center}
+.badge{width:100%;max-width:240px;display:flex;flex-direction:column;align-items:center}
+.strap{width:30px;height:64px;background:url("hhf/icon-creme.png") center 6px/18px auto repeat-y,var(--h-teal);box-shadow:inset 3px 0 0 rgba(0,0,0,.08),inset -3px 0 0 rgba(0,0,0,.08)}
+.clip{width:22px;height:20px;border:3px solid #9aa3a6;border-top:0;border-radius:0 0 8px 8px;margin-top:-2px;background:linear-gradient(#c9cfd1,#aab2b5)}
+.card2{position:relative;width:100%;aspect-ratio:54/86;max-width:100%;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 10px 24px -12px rgba(5,60,70,.35),0 1px 0 rgba(0,0,0,.05);display:flex;flex-direction:column;align-items:center;margin-top:-6px}
+.card2 .pat{position:absolute;inset:0 0 auto 0;height:30%;background:url("hhf/pattern.jpg") 0 0/240% auto}
+.card2 .slot{position:absolute;top:5%;left:50%;width:26%;height:3.2%;transform:translateX(-50%);background:var(--h-bg);border-radius:99px;box-shadow:inset 0 1px 2px rgba(0,0,0,.25);z-index:2}
+.card2 .ph{position:relative;z-index:1;margin-top:17%;width:52%;aspect-ratio:3/4;border-radius:8px;overflow:hidden;border:4px solid #fff;background:#cfeff2;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.card2 .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.card2 .ph span{font-size:44px;font-weight:600;color:var(--h-teal)}
+.card2 h3{margin:8% 0 0;font-size:17px;font-weight:600;color:#123238;text-align:center;line-height:1.15;padding:0 10px}
+.card2 .r{margin:3px 0 0;font-size:12.5px;color:#00A4C1;font-weight:500;text-align:center;padding:0 10px}
+.card2 .s{margin:2px 0 0;font-size:11px;color:var(--h-soft);text-align:center}
+.card2 .foot{margin-top:auto;width:100%;background:var(--h-teal);color:#fffdf5;display:flex;align-items:center;justify-content:space-between;gap:6px;padding:8px 10px}
+.card2 .foot img{height:22px;width:auto}
+.card2 .foot .nm{font-size:9.5px;line-height:1.1;font-weight:600;letter-spacing:.02em}
+.card2 .foot code{font-family:var(--f-mono);font-size:9.5px;opacity:.9}
+.card2 .bars{width:58%;height:5%;margin:auto 0 6px;background:repeating-linear-gradient(90deg,#123238 0 2px,transparent 2px 3px,#123238 3px 4px,transparent 4px 7px,#123238 7px 10px,transparent 10px 11px)}
+.badge .status{margin-top:12px}
+
+/* LEITOR — TEMA CLARO RECEITUÁRIO */
+.rx-only{display:none}
+.reader.rx{background:#FFFDF5;color:#1d3438;color-scheme:light}
+.reader.rx .rx-only{display:block}
+.reader.rx .rx-head{display:flex}
+.reader{overflow-x:hidden}
+.reader.rx .bar{background:rgba(255,253,245,.94);border-bottom-color:#cfe3e6}
+.reader.rx .btn{color:#06879E;border-color:#06879E;font-family:"Figtree",var(--f-body);letter-spacing:.14em}
+.reader.rx .btn:hover{background:#06879E;color:#FFFDF5}
+.reader.rx .btn:disabled{opacity:.4}
+.reader.rx article{position:relative;padding-top:56px}
+.rx-head{position:relative;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-bottom:2px solid #00A4C1;padding-bottom:14px;margin-bottom:28px}
+.rx-ribbon{position:absolute;right:-190px;top:-60px;width:150px;height:auto;pointer-events:none;opacity:.95}
+.rx-logo{display:grid;gap:4px}
+.rx-logo img{width:170px;height:auto;display:block}
+.rx-logo span{font-family:"Figtree",sans-serif;font-style:italic;font-weight:500;font-size:11px;color:#00A4C1}
+.rx-doc{all:unset;cursor:pointer;position:relative;z-index:1;display:grid;justify-items:end;text-align:right;gap:1px;padding:6px 10px;border-radius:8px;margin-right:-10px;transition:background .15s}
+.rx-doc:hover{background:rgba(0,164,193,.08)}
+.rx-doc:focus-visible{outline:2px solid #00A4C1;outline-offset:2px}
+.rx-name{font-family:"Figtree",sans-serif;font-weight:600;font-size:19px;color:#123238}
+.rx-esp{font-family:"Figtree",sans-serif;font-weight:500;font-size:13px;color:#00A4C1}
+.rx-reg{font-family:"IBM Plex Mono",monospace;font-size:11px;color:#6b7b7e}
+.rx-hint{font-family:"Figtree",sans-serif;font-size:10.5px;color:#06879E;opacity:.7;margin-top:3px}
+.rx-mark{font-family:"Figtree",sans-serif;font-weight:700;font-style:italic;font-size:34px;color:#06879E;line-height:1;margin-bottom:6px}
+.rx-mark small{font-size:22px}
+.reader.rx .kicker{font-family:"Figtree",sans-serif;color:#00A4C1;letter-spacing:.2em;font-weight:600}
+.reader.rx h2{font-family:"Figtree",sans-serif;font-weight:600;color:#06879E;text-transform:none;letter-spacing:-.01em;margin:4px 0 22px}
+.reader.rx #r-body{position:relative}
+.reader.rx #r-body::before{content:"";position:absolute;inset:0;background:url("hhf/icon-azul.png") center 30%/min(60%,320px) auto no-repeat;opacity:.07;pointer-events:none}
+.reader.rx #r-body p{position:relative;color:#1d3438}
+.rx-sign{margin:48px auto 0;width:min(260px,70%);border-top:1px solid #6b8a8f;text-align:center;font-family:"Figtree",sans-serif;font-size:11px;color:#4d6266;padding-top:6px}
+.rx-sign span{display:block;font-weight:600;font-size:13px;color:#123238}
+.reader.rx .follow{border-color:#06879E}
+.reader.rx .follow a{color:#06879E}
+.reader.rx .follow p{color:#1d3438}
+.rx-foot{margin-top:24px}
+.rx-addr{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;max-width:66ch;margin:0 auto;padding:0 max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));font-family:"Figtree",sans-serif;font-size:11px;color:#06879E;font-weight:500}
+.rx-band{height:56px;background:url("hhf/pattern.jpg") 0 0/auto 196px repeat-x}
+@media (max-width:1000px){.rx-ribbon{display:none}}
+.reader .btn{white-space:nowrap}
+@media (max-width:520px){.reader .btn{padding:7px 9px;letter-spacing:.1em;font-size:11px}.reader .bar .wrap{gap:6px}}@media (max-width:520px){.rx-doc{justify-items:start;text-align:left;margin-right:0;padding-left:0}}
+
+/* LEITOR — TEMA ESCURO RAIO-X */
+.reader:not(.rx){--xr:#dff6ff;--xr2:#9fdcf5;--xr3:#5fb8e0;--glow:0 0 3px rgba(170,230,255,.7),0 0 12px rgba(100,200,245,.45),0 0 28px rgba(60,160,230,.25);
+  background:radial-gradient(ellipse 70% 55% at 50% 35%,#0b1a26 0%,#05090d 55%,#010203 100%) fixed;color:var(--xr)}
+.reader:not(.rx)::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 .7  0 0 0 0 .9  0 0 0 0 1  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.reader:not(.rx) .bar{background:rgba(2,6,10,.88);border-bottom:1px solid rgba(140,215,250,.25)}
+.reader:not(.rx) .btn{color:var(--xr);border-color:rgba(170,230,255,.7);text-shadow:var(--glow);box-shadow:0 0 10px rgba(100,200,245,.25),inset 0 0 8px rgba(100,200,245,.15)}
+.reader:not(.rx) .btn:hover{background:rgba(160,225,255,.12);color:#fff}
+.reader:not(.rx) .btn:disabled{opacity:.35}
+.reader:not(.rx) .kicker{color:var(--xr2);text-shadow:0 0 8px rgba(100,200,245,.5)}
+.reader:not(.rx) h2{color:var(--xr);text-shadow:var(--glow);display:flex;align-items:flex-end;flex-wrap:wrap;gap:.08em;letter-spacing:.1em}
+.reader:not(.rx) h2 .x1{display:inline-grid;place-items:center;width:1.16em;height:1.16em;border:2px solid var(--xr);box-shadow:0 0 6px rgba(170,230,255,.7),0 0 18px rgba(80,180,240,.4),inset 0 0 6px rgba(170,230,255,.5);padding-left:.04em;line-height:1;padding-top:.02em;box-sizing:border-box}
+.reader:not(.rx) h2 .xr{border-bottom:2px solid var(--xr);box-shadow:0 6px 10px -6px rgba(120,210,250,.6);padding-bottom:.04em;line-height:1}
+.reader:not(.rx) #r-body p{color:#d4eef9;text-shadow:0 0 6px rgba(120,205,245,.3)}
+.reader:not(.rx) .follow{border-color:rgba(170,230,255,.6);box-shadow:0 0 14px rgba(100,200,245,.2),inset 0 0 14px rgba(100,200,245,.08)}
+.reader:not(.rx) .follow p{color:var(--xr)}
+.reader:not(.rx) .follow a{color:#fff;text-shadow:var(--glow)}
+.reader.rx h2 .x1,.reader.rx h2 .xr{all:unset}
+
+/* PÁGINA DA FIC — ÂMBAR */
+body:not(.on-hosp){background:radial-gradient(ellipse 60% 45% at 75% 35%,rgba(194,95,12,.28),transparent 70%) fixed,radial-gradient(ellipse 55% 45% at 15% 85%,rgba(194,95,12,.2),transparent 70%) fixed,#0b0603}
+:root{--glow:0 0 3px rgba(255,230,190,.7),0 0 12px rgba(255,170,60,.45),0 0 28px rgba(255,140,30,.25);--glowbox:0 0 6px rgba(255,225,180,.6),0 0 18px rgba(255,160,50,.35),inset 0 0 6px rgba(255,225,180,.4)}
+main .title{color:var(--orange-hi);text-shadow:var(--glow)}
+main .word .box{border-color:var(--orange-hi);box-shadow:var(--glowbox)}
+main .word .rest{border-bottom-color:var(--orange-hi);box-shadow:0 8px 12px -8px rgba(255,190,100,.7)}
+main .epi{color:var(--orange-hi);text-shadow:0 0 8px rgba(255,160,50,.45)}
+main .label{color:var(--orange-hi);text-shadow:0 0 8px rgba(255,160,50,.5)}
+main .label::after{background:linear-gradient(90deg,#ffb04a,transparent)}
+main .act-num{color:var(--orange-hi);border-color:var(--orange-hi);box-shadow:var(--glowbox);text-shadow:var(--glow)}
+main .act-name,main .person h3,main .ch-t{text-shadow:0 0 8px rgba(255,170,70,.3)}
+main .ch-n,main .ch-s.on{color:var(--orange-hi);text-shadow:var(--glow)}
+main .person h3 .i{border-color:var(--orange-hi);color:var(--orange-hi);box-shadow:var(--glowbox)}
+main .synopsis p{text-shadow:0 0 6px rgba(255,170,70,.2)}
+main .synopsis p:first-child::first-letter{text-shadow:var(--glow)}
+main .barcode{filter:drop-shadow(0 0 6px rgba(255,170,60,.6))}
+main .chapters,main .chapters li{border-color:rgba(255,176,74,.3)}
+main .chapters button:hover{background:rgba(255,160,50,.1)}
+main .cast,main .person{border-color:rgba(255,176,74,.3)}
+main .warn{border-left-color:#ffb04a}
+.crumple{opacity:.05}
+body:not(.on-hosp) .tabs{background:rgba(11,6,3,.88);border-bottom-color:rgba(255,176,74,.25)}
+body:not(.on-hosp) .tab[aria-selected="true"]{text-shadow:var(--glow);border-bottom-color:#ffb04a}
+body:not(.on-hosp)::before{background:#0b0603}
+footer a{text-shadow:var(--glow)}
+.anat-bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+.anat-bg img{position:absolute;mix-blend-mode:screen;max-width:none}
+body.on-hosp .anat-bg{display:none}
+
+/* LEITOR — TEMA ESCURO: FILME DE RAIO-X */
+.xr-only{display:none}
+.reader:not(.rx) .xr-only{display:block}
+.reader:not(.rx) article{position:relative;max-width:min(76ch,calc(100% - 32px));margin:36px auto 60px;padding:150px clamp(22px,6vw,72px) 150px clamp(46px,8vw,96px);
+  border:0;border-radius:0;background:none;box-shadow:none}
+.reader:not(.rx){background:radial-gradient(ellipse 70% 55% at 50% 38%,#0f2a40 0%,#061321 45%,#02070c 100%) fixed}
+.reader:not(.rx)::after{opacity:.1}
+.xr-tl,.xr-tr,.xr-bl,.xr-br{position:absolute;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;line-height:1.55;color:#cdeefc;text-shadow:0 0 6px rgba(120,205,245,.5);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.xr-tl{left:22px;top:18px}
+.xr-tr{right:22px;top:18px;text-align:right}
+.xr-bl{left:22px;bottom:18px}
+.xr-br{right:22px;bottom:18px;font-size:13px}
+.xr-r{font-size:20px;letter-spacing:.12em;margin-top:10px;font-family:"Source Sans 3",sans-serif}
+.xr-view{font-family:"Source Sans 3",sans-serif;font-size:15px;letter-spacing:.06em;margin-top:8px;color:#eaf8ff}
+.xr-doc{all:unset;cursor:pointer;border-bottom:1px dashed rgba(170,230,255,.5)}
+.xr-doc:hover{color:#fff}.xr-doc:focus-visible{outline:2px solid #9fdcf5;outline-offset:2px}
+.xr-doc b{font-weight:500;color:#fff}
+.xr-doc{display:inline-flex;align-items:center;gap:6px;border-bottom:0;padding:2px 0}
+.xr-swap{font-style:normal;font-size:10px;color:#9fdcf5;opacity:.65;margin-left:4px}
+.xr-doc:hover .xr-swap{opacity:1;color:#dff6ff}
+.xr-ruler{position:absolute;left:18px;top:170px;bottom:170px;width:14px;border-left:1px solid rgba(190,235,255,.7);
+  background:repeating-linear-gradient(180deg,rgba(190,235,255,.7) 0 1px,transparent 1px 20px) left top/6px 100% no-repeat,repeating-linear-gradient(180deg,rgba(190,235,255,.7) 0 1px,transparent 1px 100px) left top/12px 100% no-repeat;filter:drop-shadow(0 0 3px rgba(120,205,245,.6))}
+.xr-ruler span{position:absolute;left:0;bottom:-20px;font-family:"IBM Plex Mono",monospace;font-size:10px;color:#cdeefc}
+.reader:not(.rx) .follow{background:rgba(4,12,20,.5)}
+@media (max-width:560px){.reader:not(.rx) .xr-ruler{display:none!important}.reader:not(.rx) article{padding:178px 18px 140px 18px;margin-top:20px}.xr-tl,.xr-tr{font-size:10px}.xr-tr{top:auto;bottom:18px;right:auto;left:auto;right:22px;text-align:right}.xr-br{display:none!important}.xr-ruler{left:12px;top:180px}.xr-tl{right:18px}}
+
+/* GAVETA DE ARQUIVO */
+.rh-title{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin:56px 0 14px}
+.rh-title h2{margin:0;font-size:clamp(26px,4.6vw,38px);font-weight:500;line-height:1.08;letter-spacing:-.015em}
+.rh-title h2 em{font-style:normal;color:var(--h-red)}
+.rh-title span{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--h-soft)}
+.rh-intro{margin-top:48px}
+.drawer-help{margin:18px 0 22px;color:var(--h-soft);font-size:14px}
+.cabinet{position:relative;max-width:820px;margin:0 auto 64px}
+.cab-lip{height:14px;background:linear-gradient(#e2e3de,#a9aaa5);margin:0 -14px;border-radius:6px 6px 0 0}
+.drawer-in{position:relative;height:calc(var(--n,8)*40px + 110px)}
+
+.folder{all:unset;box-sizing:border-box;position:absolute;left:0;right:0;height:150px;cursor:pointer;transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.folder .body{position:absolute;left:0;right:0;top:26px;bottom:0;background:linear-gradient(#efe0b4,#e3cf98);border-top:1px solid #f7ecca;border-radius:2px 6px 6px 6px;box-shadow:0 -3px 6px rgba(0,0,0,.18),0 10px 18px -12px rgba(0,0,0,.35)}
+.folder .body::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:linear-gradient(#d8c286,transparent)}
+.folder .ftab{position:absolute;top:0;width:24%;height:30px;background:linear-gradient(#f2e4bb,#e8d6a2);border-radius:7px 7px 0 0;box-shadow:0 -2px 4px rgba(0,0,0,.25);display:flex;align-items:center;padding:0 8px}
+.folder .ftab span{flex:1;background:#fff;border-left:4px solid #06879E;border-radius:2px;padding:2px 7px;font-family:var(--f-h);font-size:13px;font-weight:600;color:#123238;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 1px 1px rgba(0,0,0,.12)}
+.folder .ftab small{font-family:var(--f-mono);font-size:9.5px;color:#8a7440;margin-left:6px}
+.folder:hover{transform:translateY(-10px)}
+.folder:focus-visible .tab{outline:3px solid #00A4C1;outline-offset:2px}
+.folder.pulled{transform:translateY(-70px)}
+.drawer-front{position:relative;height:118px;margin:0 -14px;background:linear-gradient(#d4d5d0,#babbb6 45%,#a7a8a3);border-top:2px solid #e6e7e2;border-bottom:2px solid #8b8d89;display:grid;place-items:center;box-shadow:0 -6px 10px -4px rgba(0,0,0,.4)}
+.drawer-front::before{content:"";position:absolute;inset:8px 12px;border:1px solid rgba(255,255,255,.35);border-radius:3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.label-holder{position:absolute;top:16px;left:50%;transform:translateX(-50%);width:min(240px,60%);padding:5px 8px;background:#fffdf5;border:3px solid #9a9c97;border-radius:3px;text-align:center;box-shadow:inset 0 1px 2px rgba(0,0,0,.2)}
+.label-holder span{display:block;font-family:var(--f-h);font-weight:600;font-size:14px;color:#06879E}
+.label-holder small{display:block;font-size:10.5px;color:#5f625d}
+.handle{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:min(200px,50%);height:22px;border-radius:11px;background:linear-gradient(#f2f3ef,#a5a7a2 60%,#8d8f8a);box-shadow:0 4px 6px rgba(0,0,0,.35),inset 0 1px 0 #fff}
+.keyhole{position:absolute;right:28px;top:22px;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle,#4a4c4e 30%,#c9cac5 34%,#9a9c97 70%);box-shadow:0 1px 1px rgba(255,255,255,.6)}
+.cab-body{padding-top:10px;padding-bottom:12px}
+.drawer-front.ghost{margin:0 0;opacity:.95}
+.rh-modal{position:fixed;inset:0;z-index:40;display:grid;place-items:start center;overflow-y:auto;padding:24px max(12px,env(safe-area-inset-right,0px)) 40px max(12px,env(safe-area-inset-left,0px))}
+.rh-modal[hidden]{display:none}
+.rh-back{position:fixed;inset:0;background:rgba(10,24,28,.62);backdrop-filter:blur(3px)}
+.rh-folder{position:relative;width:min(920px,100%);background:linear-gradient(#efe0b4,#e3cf98);border-radius:4px 14px 8px 8px;padding:20px 18px 24px;box-shadow:0 30px 60px -20px rgba(0,0,0,.6);animation:pull .5s cubic-bezier(.2,.8,.2,1)}
+.rh-folder::before{content:"";position:absolute;left:24px;top:-26px;width:180px;height:30px;background:linear-gradient(#f2e4bb,#efe0b4);border-radius:8px 8px 0 0}
+.rh-ftab{position:absolute;left:36px;top:-21px;z-index:1;font-family:var(--f-h);font-size:13px;font-weight:600;color:#123238;background:#fff;border-left:4px solid #06879E;padding:2px 10px;border-radius:2px;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rh-tools{position:relative;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.rh-btn{all:unset;cursor:pointer;font-family:var(--f-h);font-size:13px;font-weight:600;color:#5b4a1e;background:rgba(255,253,245,.6);border:1px solid rgba(91,74,30,.35);border-radius:99px;padding:6px 14px}
+.rh-btn:hover{background:#fffdf5}.rh-btn:focus-visible{outline:2px solid #06879E;outline-offset:2px}
+#rh-close{color:#fffdf5;background:#06879E;border-color:#06879E}
+.rh-paper{animation:paper .55s .1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes pull{from{transform:translateY(40vh) scale(.9);opacity:0}to{transform:none;opacity:1}}
+@keyframes paper{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.rh-folder,.rh-paper{animation:none}.folder{transition:none}}
+/* FICHA */
+.rh{position:relative;background:#FFFDF5;color:#123238;border-radius:3px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.2);font-family:var(--f-h)}
+.rh .band{height:42px;background:url("hhf/pattern.jpg") 0 0/auto 147px repeat-x}
+.rh-hd{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;padding:26px clamp(18px,5vw,48px) 0}
+.rh-hd img{width:min(210px,52vw);height:auto;display:block}
+.rh-hd .sl{font-style:italic;font-weight:500;font-size:10.5px;color:#00A4C1;margin-top:3px}
+.rh-tag{text-align:right}
+.rh-tag .t{font-size:12px;font-weight:700;letter-spacing:.24em;color:#06879E}
+.rh-tag .n{font-size:30px;font-weight:700;letter-spacing:-.5px}
+.rh-tag .d{font-size:11.5px;color:#6b7b7e}
+.rh-rule{margin:22px clamp(18px,5vw,48px) 0;height:3px;background:linear-gradient(90deg,#00A4C1,#06879E)}
+.rh-top{position:relative;display:grid;grid-template-columns:180px 1fr;gap:28px;padding:26px clamp(18px,5vw,48px) 0}
+.rh-ph{position:relative;aspect-ratio:3/4;max-width:100%;border-radius:8px;overflow:hidden;border:5px solid #fff;box-shadow:0 6px 16px -8px rgba(4,60,70,.45);background:#cfeff2;display:grid;place-items:center}
+.rh-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.rh-ph b{font-size:64px;color:#06879E}
+.rh-ph i{position:absolute;left:0;right:0;bottom:0;background:#06879E;color:#FFFDF5;font-style:normal;font-size:10px;text-align:center;padding:4px;letter-spacing:.12em}
+.rh-who .k{font-size:11px;font-weight:700;letter-spacing:.22em;color:#7a9094}
+.rh-who h3{margin:4px 0 2px;font-size:clamp(28px,5vw,40px);font-weight:700;letter-spacing:-1px;line-height:1.05}
+.rh-who .r{font-size:18px;color:#00A4C1;font-weight:500}
+.rh-chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}
+.rh-chips span{font-size:12px;font-weight:600;padding:5px 11px;border-radius:99px;background:#e3f4f6;color:#06879E}
+.rh-chips span.w{background:#fdeedd;color:#b5661a}
+.rh-bar{display:flex;align-items:center;gap:12px;margin-top:18px;font-family:var(--f-mono);font-size:11.5px;color:#4d6266}
+.rh-bar i{width:170px;height:30px;background:repeating-linear-gradient(90deg,#123238 0 2px,transparent 2px 3px,#123238 3px 4px,transparent 4px 7px,#123238 7px 10px,transparent 10px 11px)}
+.rh-stamp{position:absolute;right:clamp(18px,5vw,48px);bottom:-6px;transform:rotate(-11deg);border:4px solid currentColor;padding:6px 16px;font-size:22px;font-weight:800;letter-spacing:.14em;border-radius:7px;opacity:.85;color:#06879E;text-align:center;line-height:1.1}
+.rh-stamp small{display:block;font-size:9.5px;letter-spacing:.2em;font-weight:700}
+.rh-stamp.w{color:#b5661a}
+.rh-sec{margin:26px clamp(18px,5vw,48px) 0}
+.rh-sec h4{display:flex;align-items:center;gap:10px;margin:0 0 10px;font-size:11.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#06879E}
+.rh-sec h4::after{content:"";flex:1;height:1px;background:#cfe0e2}
+.rh-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #d6e4e6;border-radius:9px;overflow:hidden;background:#fff}
+.rh-f{padding:10px 14px;border-right:1px solid #e3ecee;border-bottom:1px solid #e3ecee;display:grid;gap:2px;min-width:0}
+.rh-f span{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#7a9094}
+.rh-f b{font-size:15px;font-weight:600;color:#123238}
+.rh-obs{background:#fff;border:1px solid #d6e4e6;border-radius:9px;padding:14px 16px;font-size:14.5px;line-height:1.6;color:#2d4549}
+.rh-sign{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,6vw,60px);margin:40px clamp(18px,5vw,48px) 0}
+.rh-sign div{border-top:1px solid #6b8a8f;padding-top:6px;font-size:11px;color:#4d6266;text-align:center}
+.rh-sign b{display:block;color:#123238;font-size:12.5px}
+.rh-ft{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;padding:28px clamp(18px,5vw,48px) 10px;font-size:10.5px;color:#06879E;font-weight:500}
+@media (max-width:640px){.rh-btn{padding:6px 10px;font-size:12px}.rh-tools{flex-wrap:nowrap}.rh-top{grid-template-columns:1fr}.rh-ph{width:150px}.rh-grid{grid-template-columns:1fr 1fr}.rh-stamp{bottom:auto;top:30px;font-size:16px}.rh-tag{text-align:left}
+ .folder .ftab{width:46%;min-width:0}.drawer-in{height:calc(var(--n,8)*46px + 110px)}}
+
+/* ===== PROTÓTIPO INTERATIVO ===== */
+.proto-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:56px 0 0;padding:12px 16px;border:1.5px dashed #b5661a;border-radius:10px;background:#fff7ec;font-size:13.5px;color:#5b4a1e}
+.proto-bar .pb-k{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;background:#b5661a;color:#fff;padding:2px 8px;border-radius:4px}
+.proto-bar input{flex:1;min-width:140px;accent-color:#06879E}
+.pb-reset{all:unset;cursor:pointer;font-size:12.5px;font-weight:600;color:#06879E;text-decoration:underline}
+.hx{margin-top:64px}
+.hx-head h2{margin:0;font-size:clamp(26px,4.6vw,38px);font-weight:500;line-height:1.08;letter-spacing:-.015em;color:var(--h-ink)}
+.hx-head h2 em{font-style:normal;color:var(--h-red)}
+.hx-head p{margin:8px 0 22px;color:var(--h-soft);font-size:15px;max-width:60ch}
+/* plantão */
+.roster-wrap{overflow-x:auto;border:1px solid var(--h-rule);border-radius:10px;background:#fff}
+.roster{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+.roster th,.roster td{padding:10px 12px;border-bottom:1px solid #eef3f3;text-align:left;vertical-align:top}
+.roster thead th{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--h-soft);font-weight:500}
+.roster tbody th{font-weight:600;color:var(--h-teal);white-space:nowrap;width:120px}
+.roster .today{background:#e9f7f9}
+.roster thead th.today{color:var(--h-teal);font-weight:700}
+.roster thead th.today::after{content:" · hoje";color:#00A4C1}
+.roster td span{display:inline-block;margin:2px 4px 2px 0;padding:2px 8px;border-radius:99px;background:#eef5f6;font-size:12.5px;color:#123238}
+.roster td span.w{background:#fdeedd;color:#b5661a}
+/* quadro branco */
+.wb-tabs{position:relative;width:min(1180px,calc(100vw - 32px));left:50%;transform:translateX(-50%);display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.wb-tabs button{all:unset;cursor:pointer;font-size:13.5px;font-weight:600;padding:7px 14px;border-radius:99px;border:1.5px solid var(--h-teal);color:var(--h-teal)}
+.wb-tabs button[aria-selected="true"]{background:var(--h-teal);color:#fffdf5}
+.wb-tabs button:focus-visible{outline:2px solid #00A4C1;outline-offset:2px}
+.wb{position:relative;background:linear-gradient(135deg,#ffffff,#f1f4f4 60%,#e9eded);border:14px solid #c9cdcf;border-radius:6px;box-shadow:inset 0 0 40px rgba(0,0,0,.06),0 18px 30px -18px rgba(0,0,0,.4);padding:24px clamp(16px,4vw,40px) 30px;min-height:330px;font-family:"Caveat","Comic Sans MS",cursive;color:#1b2a6b}
+.wb::after{content:"";position:absolute;left:10%;right:10%;bottom:-30px;height:14px;background:#a9aeb0;border-radius:0 0 6px 6px}
+.wb h3{font-family:"Permanent Marker","Caveat",cursive;font-weight:400;font-size:clamp(24px,4vw,34px);margin:0 0 4px;color:#1b2a6b}
+.wb .pt{font-size:22px;color:#b0262b;margin-bottom:16px}
+.wb-cols{display:grid;grid-template-columns:1.3fr 1fr;gap:24px}
+.wb ul{list-style:none;margin:0;padding:0;font-size:clamp(22px,3.4vw,28px);line-height:1.3}
+.wb li{display:flex;gap:10px;align-items:baseline}
+.wb li::before{content:"–";color:#1b2a6b}
+.wb li.lock{color:#9aa3a6}
+.wb li.lock::before{content:"?"}
+.wb li small{font-size:.62em;color:#9aa3a6}
+.wb .ddx h4{font-family:"Permanent Marker",cursive;font-weight:400;font-size:20px;margin:0 0 6px;color:#0e6e3a}
+.wb .ddx li{color:#0e6e3a;text-decoration:line-through;text-decoration-color:rgba(14,110,58,.5)}
+.wb .dx{margin-top:22px;position:relative;display:inline-block;font-family:"Permanent Marker",cursive;font-size:clamp(22px,3.6vw,30px);color:#b0262b;border:3px solid #b0262b;border-radius:40% 50% 45% 55%/55% 45% 55% 45%;padding:6px 22px}
+.wb .dx-hide{margin-top:22px;display:inline-block;transform:rotate(-2deg);background:#fff59c;box-shadow:0 6px 10px -6px rgba(0,0,0,.35);padding:12px 18px;font-size:24px;color:#5b4a1e}
+/* mural */
+.cork{position:relative;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:22px;padding:28px;border:12px solid #8a5a33;border-radius:6px;background:radial-gradient(circle at 20% 30%,rgba(255,255,255,.12) 0 2px,transparent 3px) 0 0/22px 22px,radial-gradient(circle at 70% 60%,rgba(0,0,0,.12) 0 2px,transparent 3px) 0 0/17px 17px,#c49563;box-shadow:inset 0 0 30px rgba(0,0,0,.25)}
+.note{position:relative;padding:22px 16px 16px;min-height:150px;box-shadow:0 10px 14px -10px rgba(0,0,0,.5);font-size:14px;line-height:1.45;color:#2a2a2a}
+.note::before{content:"";position:absolute;top:8px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8d8d,#c0262b);box-shadow:0 2px 2px rgba(0,0,0,.4)}
+.note.memo{background:#fff;font-family:var(--f-h)}
+.note.memo b{display:block;color:#06879E;font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}
+.note.post{background:#fff59c;font-family:"Caveat",cursive;font-size:22px;line-height:1.15}
+.note.post.b{background:#c6f0f5}
+.note.down{background:#e9e1d1;display:grid;place-items:center;text-align:center;color:#8a7a5a;font-size:13px;font-family:var(--f-mono)}
+.note small{display:block;margin-top:10px;font-family:var(--f-mono);font-size:10.5px;color:#8a8a8a}
+/* mapa */
+.map-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:20px;align-items:start}
+.plan{width:100%;height:auto;background:#fff;border:1px solid var(--h-rule);border-radius:10px}
+.plan .room{cursor:pointer}
+.plan .room rect{fill:#eaf6f8;stroke:#06879E;stroke-width:2;transition:fill .15s}
+.plan .room:hover rect,.plan .room:focus rect{fill:#c8ecf2}
+.plan .room.on rect{fill:#06879E}
+.plan .room.on text{fill:#fffdf5}
+.plan .room text{font-family:var(--f-h);font-size:17px;font-weight:600;fill:#123238;pointer-events:none}
+.plan .room:focus{outline:none}
+.plan .room:focus-visible rect{stroke:#b5661a;stroke-width:3}
+.map-info{background:#fff;border:1px solid var(--h-rule);border-radius:10px;padding:18px}
+.map-info h3{margin:0 0 4px;font-size:20px;color:var(--h-teal)}
+.map-info p{margin:0 0 12px;color:var(--h-soft);font-size:13.5px}
+.map-info ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.map-info li{font-size:14px;padding:8px 10px;border-radius:8px;background:#f3f8f8}
+.map-info li.lock{color:#9aa3a6;background:#f6f6f4}
+.map-info li b{font-family:var(--f-mono);font-size:11px;color:#06879E;margin-right:6px}
+/* arquivo morto */
+.charts{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.chart{all:unset;box-sizing:border-box;cursor:pointer;position:relative;display:block;padding:18px;border-radius:4px 10px 10px 10px;background:linear-gradient(#efe0b4,#e3cf98);box-shadow:0 10px 18px -12px rgba(0,0,0,.4);min-height:150px;font-family:var(--f-h)}
+.chart::before{content:"";position:absolute;left:0;top:-14px;width:110px;height:16px;border-radius:6px 6px 0 0;background:#efe0b4}
+.chart .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;color:#8a7440}
+.chart h3{margin:6px 0 2px;font-size:20px;color:#123238}
+.chart p{margin:0;font-size:13px;color:#5b4a1e}
+.chart.lock{cursor:not-allowed;filter:grayscale(.6);opacity:.75}
+.chart.lock::after{content:"CONFIDENCIAL";position:absolute;right:14px;bottom:16px;transform:rotate(-10deg);border:3px solid #b0262b;color:#b0262b;font-weight:800;font-size:13px;letter-spacing:.14em;padding:3px 8px;border-radius:4px}
+.chart:focus-visible{outline:3px solid #00A4C1;outline-offset:3px}
+.chart-open{margin-top:18px;background:#fff;border:1px solid var(--h-rule);border-radius:10px;padding:20px;font-size:14.5px;line-height:1.6}
+.chart-open h3{margin:0 0 10px;color:var(--h-teal)}
+.chart-open dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0 0 12px}
+.chart-open dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--h-soft);padding-top:3px}
+.chart-open dd{margin:0}
+@media (max-width:700px){.wb-cols,.map-grid{grid-template-columns:1fr}.cork{padding:18px;border-width:8px}}
+
+/* MAQUETE 3D */
+.map3d{display:grid;grid-template-columns:1.6fr 1fr;gap:18px;align-items:stretch}
+.stage{position:relative;min-height:420px;border-radius:12px;overflow:hidden;background:linear-gradient(#d9eef3,#fffdf5 70%);border:1px solid var(--h-rule)}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+.stage canvas:active{cursor:grabbing}
+.stage-tip{position:absolute;left:12px;bottom:12px;pointer-events:none;font-family:var(--f-h);font-size:12.5px;font-weight:600;background:#06879E;color:#fffdf5;padding:5px 10px;border-radius:6px;opacity:0;transition:opacity .15s}
+.stage-tip.on{opacity:1}
+.stage-fallback[hidden]{display:none}
+.stage-fallback{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--h-soft)}
+.totem{background:#06879E;border-radius:12px;overflow:hidden;color:#fffdf5;display:flex;flex-direction:column}
+.totem-top{display:flex;align-items:center;gap:10px;padding:14px 16px;background:#FFFDF5;color:#06879E;font-weight:600;font-size:14px;letter-spacing:.12em;text-transform:uppercase}
+.totem-top img{width:28px;height:auto;filter:brightness(0) saturate(100%) invert(38%) sepia(70%) saturate(1200%) hue-rotate(160deg)}
+.totem-list{list-style:none;margin:0;padding:6px 0}
+.totem-list button{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:9px 16px;border-bottom:1px solid rgba(255,253,245,.18)}
+.totem-list button:hover,.totem-list button[aria-pressed="true"]{background:rgba(255,253,245,.14)}
+.totem-list button:focus-visible{outline:2px solid #FFFDF5;outline-offset:-2px}
+.totem-list .fl{font-size:20px;white-space:nowrap;font-weight:700;text-align:center;font-variant-numeric:tabular-nums}
+.totem-list .nm{font-weight:600;font-size:15px}
+.totem-list .nm small{display:block;font-weight:400;font-size:12px;opacity:.75}
+.totem-list .ar{font-size:18px}
+.totem .map-info{margin:12px;border:0}
+@media (max-width:760px){.map3d{grid-template-columns:1fr}.stage{min-height:340px}}
+
+/* ABERTURA ÂMBAR */
+.amber{position:relative;overflow:hidden;background:radial-gradient(ellipse 40% 58% at 62% 48%,rgba(255,200,110,.85) 0%,rgba(242,140,40,.5) 20%,rgba(194,95,12,.22) 44%,transparent 72%)}
+.amber-art{position:absolute;inset:0;pointer-events:none}
+.amber-art img{position:absolute;mix-blend-mode:screen;max-width:none}
+.an-pulm{left:51%;top:15%;width:min(480px,46%);opacity:.4}
+.an-maos{left:-4%;top:38%;width:min(620px,58%);opacity:.28}
+.an-maos2{right:-6%;top:-12%;width:min(420px,40%);opacity:.1;transform:rotate(160deg)}
+.an-lab{position:absolute;inset:0;width:100%;height:100%}
+.an-lab text{font-family:Georgia,serif;font-style:italic;font-size:13px;fill:#ffcf8a;opacity:.55}
+.an-lab line{stroke:#ffcf8a;stroke-width:.8;opacity:.45}
+.amber .hero{position:relative;z-index:1;padding-block:56px 110px}
+.amber .epi{color:#ffe9c9;text-shadow:0 0 12px rgba(0,0,0,.6)}
+.amber .epi b{color:#fff}
+.amber .title{color:#fff;text-shadow:0 0 6px rgba(255,240,210,.8),0 0 24px rgba(255,190,90,.6),0 0 60px rgba(255,150,40,.5)}
+.amber .word .box{border-color:#fff;box-shadow:0 0 10px rgba(255,230,190,.8),0 0 30px rgba(255,170,60,.5),inset 0 0 8px rgba(255,230,190,.5)}
+.amber .word .rest{border-bottom-color:#fff;box-shadow:0 10px 14px -10px rgba(255,200,120,.9)}
+.amber .byline{color:#ffd9a3}
+.amber .byline a{color:#fff;border-bottom-color:#ffb04a;text-shadow:none}
+@media (max-width:640px){.an-lab{display:none}.an-pulm{left:40%;top:30%;width:70%}.an-maos{top:55%;width:90%}}
+
+/* SELETOR DE TEMA */
+.themes{display:inline-flex;border:1.5px solid currentColor;border-radius:2px;overflow:hidden}
+.th{all:unset;cursor:pointer;font-family:var(--f-display);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;padding:7px 10px;opacity:.65}
+.th[aria-pressed="true"]{opacity:1;background:rgba(127,211,226,.18)}
+.th:focus-visible{outline:2px solid currentColor;outline-offset:-3px}
+.reader:not(.rx) .themes{color:#dff6ff;border-color:rgba(170,230,255,.7);box-shadow:0 0 10px rgba(100,200,245,.25)}
+.reader.rx .themes{color:#06879E;font-family:"Figtree",sans-serif}
+.reader.rx .th{font-family:"Figtree",sans-serif;font-weight:600;letter-spacing:.1em}
+.reader.rx .th[aria-pressed="true"]{background:#06879E;color:#FFFDF5}
+/* RECEITUÁRIO ESCURO */
+.reader.rx.dk{background:#0c1a1d;color:#dbe9ea;color-scheme:dark}
+.reader.rx.dk .bar{background:rgba(10,21,23,.94);border-bottom-color:rgba(0,164,193,.25)}
+.reader.rx.dk .btn{color:#7fd3e2;border-color:#2f8796}
+.reader.rx.dk .btn:hover{background:#06879E;color:#FFFDF5}
+.reader.rx.dk .themes{color:#7fd3e2}
+.reader.rx.dk .th[aria-pressed="true"]{background:#06879E;color:#FFFDF5}
+.reader.rx.dk .rx-logo span{color:#7fd3e2}
+.reader.rx.dk .rx-name{color:#FFFDF5}
+.reader.rx.dk .rx-esp,.reader.rx.dk .kicker{color:#00A4C1}
+.reader.rx.dk .rx-reg{color:#7f9da2}
+.reader.rx.dk .rx-hint{color:#7fd3e2}
+.reader.rx.dk .rx-doc:hover{background:rgba(0,164,193,.12)}
+.reader.rx.dk h2{color:#7fd3e2}
+.reader.rx.dk #r-body p{color:#dbe9ea}
+.reader.rx.dk #r-body::before{opacity:.06}
+.reader.rx.dk .rx-sign{border-top-color:#4d7177;color:#8fb0b4}
+.reader.rx.dk .rx-sign span{color:#FFFDF5}
+.reader.rx.dk .follow{border-color:#2f8796}
+.reader.rx.dk .follow p{color:#dbe9ea}
+.reader.rx.dk .follow a{color:#7fd3e2}
+.reader.rx.dk .rx-addr{color:#7fd3e2}
+.reader.rx.dk .rx-band{filter:brightness(.55) saturate(1.1)}
+@media (max-width:520px){.th{padding:7px 7px;font-size:10.5px;letter-spacing:.08em}}
+
+/* FICHA DE DIAGNÓSTICO */
+.dxs{position:relative;width:min(1180px,calc(100vw - 32px));left:50%;transform:translateX(-50%);box-sizing:border-box;--t1:#06879E;--t1b:#e1f2f4;--t2:#00A4C1;--t2b:#dff5f9;--t3:#b5661a;--t3b:#fbecdc;--t4:#5b7a80;--t4b:#e9eff0;background:#fff;border:1px solid var(--h-rule);border-radius:16px;padding:clamp(16px,3vw,28px);box-shadow:0 18px 30px -22px rgba(4,60,70,.35)}
+.dx-top{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;margin-bottom:20px}
+.dx-word{position:relative;font-family:var(--f-h);font-weight:800;font-size:clamp(30px,5vw,46px);letter-spacing:.02em;text-transform:uppercase;color:#123238;padding:0 10px;line-height:1.1;background:linear-gradient(transparent 55%,#cfeff2 55%)}
+.dx-word::after{content:"";position:absolute;left:8px;right:8px;bottom:-6px;height:4px;border-radius:2px;background:#00A4C1;opacity:.6}
+.dx-field{min-height:52px;border:2px solid #00A4C1;border-radius:12px;display:flex;align-items:center;padding:6px 16px;font-family:"Permanent Marker","Caveat",cursive}
+.dx-field b{font-weight:400;font-size:clamp(20px,3vw,26px);color:#b0262b}
+.dx-field span{font-family:var(--f-h);font-size:14px;color:#9aa3a6;font-style:italic}
+.dx-meta{text-align:right;font-family:var(--f-h);line-height:1.35}
+.dx-meta b{display:block;font-size:16px;color:#123238}
+.dx-meta span{font-size:12.5px;color:var(--h-soft)}
+.dx-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.dx-box{border:2px solid var(--c);border-radius:14px;overflow:hidden;background:#fff;display:flex;flex-direction:column;min-height:170px;min-width:0}
+.dx-box.t1{--c:var(--t1);--b:var(--t1b)}.dx-box.t2{--c:var(--t2);--b:var(--t2b)}.dx-box.t3{--c:var(--t3);--b:var(--t3b)}.dx-box.t4{--c:var(--t4);--b:var(--t4b)}
+.dx-box h4{display:flex;align-items:center;gap:10px;margin:0;padding:10px 12px;background:var(--b);font-family:var(--f-h);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#123238}
+.dx-box .ic{width:32px;height:32px;border-radius:50%;background:var(--c);display:grid;place-items:center;flex:none}
+.dx-box .ic svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dx-box ul{list-style:none;margin:0;padding:12px 14px;display:grid;gap:4px;font-family:"Caveat","Comic Sans MS",cursive;font-size:22px;line-height:1.15;color:#1b2a6b}
+.dx-box li::before{content:"– "}
+.dx-box li.x{text-decoration:line-through;text-decoration-color:rgba(176,38,43,.6);color:#6b3a20}
+.dx-box li.lock{color:#a9b2b4}
+.dx-box li.lock::before{content:""}
+.dx-box li small{font-family:var(--f-mono);font-size:11px}
+.dx-ft{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px;padding-top:12px;border-top:1px solid #e3ecee;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--h-soft)}
+@media (max-width:980px){.dx-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.dx-top{grid-template-columns:1fr}.dx-meta{text-align:left}.dx-grid{grid-template-columns:1fr}.dx-box{min-height:0}}
+
+/* LINHA DO TEMPO */
+.tl-help{margin:-8px 0 26px;color:var(--muted);font-size:14px}
+.tl{position:relative;list-style:none;margin:0;padding:0}
+.tl::before{content:"";position:absolute;left:50%;top:6px;bottom:6px;width:2px;margin-left:-1px;background:linear-gradient(#ffb04a,rgba(255,176,74,.15));box-shadow:0 0 10px rgba(255,170,60,.5)}
+.tl li{position:relative;width:50%;padding:0 34px 30px 0;box-sizing:border-box}
+.tl li:nth-child(even){margin-left:50%;padding:0 0 30px 34px}
+.tl li::before{content:"";position:absolute;top:6px;right:-7px;width:12px;height:12px;border-radius:50%;background:#ffe2b8;box-shadow:0 0 8px rgba(255,200,120,.9),0 0 18px rgba(255,150,40,.6)}
+.tl li:nth-child(even)::before{right:auto;left:-7px}
+.tl li:nth-child(odd){text-align:right}
+.tl .when{font-family:var(--f-display);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#ffb04a;text-shadow:0 0 8px rgba(255,160,50,.45)}
+.tl h3{margin:4px 0 4px;font-family:var(--f-display);font-weight:400;font-size:22px;letter-spacing:.04em;color:var(--orange-hi);text-shadow:var(--glow)}
+.tl p{margin:0;color:var(--ink);font-size:14.5px;line-height:1.5;opacity:.9}
+.tl .ch{display:inline-block;margin-top:8px;font-family:var(--f-mono,monospace);font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.tl li.lock::before{background:transparent;border:1.5px solid rgba(255,176,74,.55);box-shadow:none;width:10px;height:10px}
+.tl li.lock .when,.tl li.lock h3{color:rgba(255,226,184,.35);text-shadow:none}
+.tl li.lock h3{letter-spacing:.3em}
+.tl li.lock p{color:var(--muted);opacity:.7;font-style:italic}
+.tl li.now::before{width:18px;height:18px;right:-10px;top:3px;background:#fff}
+.tl li.now:nth-child(even)::before{left:-10px}
+@media (max-width:640px){.tl::before{left:7px}.tl li,.tl li:nth-child(even){width:auto;margin-left:0;padding:0 0 26px 30px;text-align:left}.tl li::before,.tl li:nth-child(even)::before{left:1px;right:auto}.tl li.now::before,.tl li.now:nth-child(even)::before{left:-2px}}
+
+/* ABAS: Sobre a história / Capítulos */
+body:not(.on-caps) main #capitulos{display:none}
+body.on-caps main > *:not(#capitulos){display:none}
+body.on-caps main #capitulos{padding-top:48px;min-height:70vh}
+
+/* LEITURA NO COMPUTADOR: ocupar a tela */
+@media (min-width:1000px){
+ .reader article{max-width:min(1040px,88vw)}
+ .reader #r-body p{font-size:clamp(19px,1.35vw,21px);line-height:1.8}
+ .reader h2{font-size:clamp(40px,3.4vw,52px)}
+ .reader.rx .rx-logo img{width:210px}
+ .reader.rx .rx-logo span{font-size:12.5px}
+ .reader.rx .rx-name{font-size:22px}
+ .reader.rx .rx-esp{font-size:15px}
+ .reader.rx .rx-reg,.reader.rx .rx-hint{font-size:12px}
+ .reader.rx .kicker{font-size:13px}
+ .reader.rx #r-body::before{background-size:min(46%,420px) auto}
+ .reader.rx .rx-sign{width:300px;font-size:12px}.reader.rx .rx-sign span{font-size:14.5px}
+ .rx-addr{max-width:min(1040px,88vw);font-size:12px}
+ .rx-ribbon{right:-170px;top:-30px}
+ .reader:not(.rx) article{max-width:min(1120px,92vw)}
+ .xr-tl,.xr-tr,.xr-bl{font-size:12.5px}
+ .reader .follow{max-width:none}
+ .reader .bar .wrap{max-width:min(1040px,88vw);padding-left:0;padding-right:0}
+ .reader:not(.rx) .bar .wrap{max-width:min(1120px,92vw)}
+}
+@media (max-width:1299px){.rx-ribbon{display:none}}
+
+</style>
+
+<div class="crumple" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="anat-bg" aria-hidden="true">
+  <img src="hhf/anat-pulmoes.png" alt="" style="left:-8%;top:52%;width:min(420px,45vw);opacity:.1;transform:rotate(-12deg)">
+  <img src="hhf/anat-maos.png" alt="" style="right:-10%;top:30%;width:min(560px,60vw);opacity:.09;transform:rotate(8deg)">
+  <img src="hhf/anat-maos.png" alt="" style="left:6%;top:-6%;width:min(380px,40vw);opacity:.06;transform:rotate(195deg)">
+  <img src="hhf/anat-pulmoes.png" alt="" style="right:4%;bottom:-14%;width:min(360px,40vw);opacity:.08;transform:rotate(14deg)">
+</div>
+<canvas id="scratch" aria-hidden="true"></canvas>
+
+<nav class="tabs" aria-label="Seções"><div class="wrap" role="tablist">
+  <button class="tab" role="tab" id="t-fic" aria-selected="true">Sobre a história</button>
+  <button class="tab" role="tab" id="t-caps" aria-selected="false">Capítulos</button>
+  <button class="tab" role="tab" id="t-hosp" aria-selected="false">Hospital</button>
+</div></nav>
+
+<main>
+  <div class="amber" aria-hidden="false">
+  <header class="hero wrap">
+    <div class="epi">
+      <p>Todo diagnóstico começa com uma pergunta. O difícil é <b>aceitar a resposta</b>.</p>
+    </div>
+    <h1 class="title" aria-label="Método Socrático">
+      <span class="word"><span class="box">M</span><span class="rest">étodo</span></span>
+      <span class="word second"><span class="box">S</span><span class="rest">ocrático</span></span>
+    </h1>
+    <div class="byline">uma fic Loquinha por <a href="https://x.com/guillenart_" target="_blank" rel="noopener">@guillenart_</a></div>
+  </header>
+  </div>
+
+
+  <section class="block wrap" id="sinopse">
+    <h2 class="label">Sinopse</h2>
+    <div class="synopsis">
+      <div>
+        <p>Dois anos depois de ser demitida, Eduarda volta a atender na clínica do Hospital Helena Ferette, propriedade da família da sua ex-namorada, Lorena Ferette. Ela só não esperava que a nova diretora fosse justamente sua ex, que trocou o Brasil por uma residência em Londres.</p>
+        <p>Método Socrático aborda três casos médicos, um por ato, que obrigam as duas ex-namoradas, e agora colegas de trabalho, a dividir corredores, diagnósticos e um passado que ninguém contou por inteiro. No hospital, todo mundo mente. A pergunta é sobre o quê.</p>
+        <p class="warn">Inspirada na série "Dr. House." Contém temas de dependência química e saúde mental.</p>
+      </div>
+      <div class="barcode" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section class="block wrap" id="capitulos">
+    <h2 class="label">Capítulos</h2>
+    <div class="acts">
+      <div>
+        <div class="act-head"><span class="act-num">ATO I</span><h3 class="act-name">Fidelidade</h3></div>
+        <p class="case">Caso clínico inspirado no episódio <i>"Fidelity"</i> (Temporada 1 Episódio 7)</p>
+        <ol class="chapters" data-act="1"></ol>
+      </div>
+      <div>
+        <div class="act-head"><span class="act-num">ATO II</span><h3 class="act-name">Método Socrático</h3></div>
+        <p class="case">A mãe, o filho e o diagnóstico errado. Inspirado no episódio <i>"The Socratic Method"</i> (Temporada 1 Episódio 6)</p>
+        <ol class="chapters" data-act="2"></ol>
+      </div>
+      <div>
+        <div class="act-head"><span class="act-num">ATO III</span><h3 class="act-name">Cães Adormecidos</h3></div>
+        <p class="case">Maíra e Irina. Inspirado no episódio <i>"Sleeping Dogs Lie"</i> (Temporada 2 Episódio 18)</p>
+        <ol class="chapters" data-act="3"></ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap" id="linha">
+    <h2 class="label">Linha do tempo</h2>
+    <p class="tl-help">Os acontecimentos aparecem aqui conforme você lê. Nada é revelado antes do capítulo certo.</p>
+    <ol class="tl" id="tl"></ol>
+  </section>
+
+  <footer class="wrap">
+    MÉTODO SOCRÁTICO · <a href="https://x.com/guillenart_" target="_blank" rel="noopener">@guillenart_</a><br>desenvolvido por guillenart_
+  </footer>
+</main>
+
+<section class="hosp" id="hosp-view" hidden aria-label="Hospital Helena Ferette">
+  <div class="h-band" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="h-top">
+      <div class="logo-box"><img class="logo-img" src="hhf/logo-sem-slogan.png" width="735" height="360" alt="Hospital Helena Ferette"><p class="slogan">Cuidado e carinho são a nossa missão</p></div>
+      <div class="h-meta">Diretoria geral · Dra. Lorena Ferette<br>Atendimento 24 horas</div>
+    </div>
+
+    <div class="collage v4a" aria-hidden="true">
+      <div class="ecg-paper" style="left:14%;top:48%;width:80%;height:50%"><svg viewBox="0 0 800 100" preserveAspectRatio="none"><polyline points="0,60 60,60 70,52 80,60 100,60 108,70 118,10 130,88 140,60 220,60 232,52 244,60 280,60 288,70 298,10 310,88 320,60 400,60 412,52 424,60 460,60 468,70 478,10 490,88 500,60 580,60 592,52 604,60 640,60 648,70 658,10 670,88 680,60 800,60"/></svg></div>
+      <div class="ecg-paper" style="left:56%;top:0;width:24%;height:11%"></div>
+      <div class="blk" style="left:22%;top:3%;width:21%;height:72%;background:#0b4a57;border-radius:0 0 0 60px"></div>
+      <div class="blk" style="left:43%;top:17%;width:25%;height:76%;background:#06879e"></div>
+      <div class="blk" style="left:62%;top:9%;width:24%;height:44%;background:#bfe9ee"></div>
+      <img class="cut" src="hhf/v4/pulmoes.png" style="left:65%;top:11%;height:40%" alt="">
+      <img class="cut" src="hhf/v4/hemacias.png" style="left:-2%;top:0;width:34%" alt="">
+      <img class="frame" src="hhf/v4/maos-cirurgia.jpg" style="left:46%;top:40%;width:20%;height:44%" alt="">
+      <img class="cut" src="hhf/v4/enfermeira-prancheta.png" style="left:9%;bottom:3%;height:72%" alt="">
+    </div>
+
+
+
+    <div class="collage v4b" aria-hidden="true">
+      <svg class="shapes" viewBox="0 0 1000 420" preserveAspectRatio="none">
+        <rect width="1000" height="420" fill="#cfeff2"/>
+        <line x1="150" y1="215" x2="860" y2="215" stroke="#2a4a52" stroke-width="1"/>
+      </svg>
+      <span class="circ" style="left:37%;top:10%;width:27%;background:#06879e"></span>
+      <span class="circ" style="left:15%;top:48%;width:7%;background:#2b2f31"></span>
+      <span class="circ" style="left:70%;top:58%;width:11%;background:#0e6f86"></span>
+      <span class="circ" style="left:45%;top:84%;width:5%;background:#2b2f31"></span>
+      <span class="vtext" style="left:62%;top:8%">HHF<br>ALA<br>LESTE<br>LEITO<br>12</span>
+      <span class="vtext box" style="left:42%;top:56%">P<br>R<br>O<br>N<br>T<br>U<br>Á<br>R<br>I<br>O</span>
+      <img class="cut" src="hhf/v4/microscopio.png" style="left:6%;top:6%;height:56%" alt="">
+      <img class="cut" src="hhf/v4/medica-paciente.png" style="left:33%;bottom:0;height:74%" alt="">
+      <img class="cut" src="hhf/v4/cirurgia-mulher.png" style="left:66%;top:4%;height:58%" alt="">
+    </div>
+
+    <div class="h-intro rh-intro">
+      <h2>Quem cuida de você no <em>Helena Ferette</em>.</h2>
+      <p>Corpo clínico e administração do hospital. Cada ficha traz cargo, especialidade e situação funcional atualizadas pelo Departamento de Pessoal.</p>
+    </div>
+<span id="h-count" hidden></span>
+    <p class="drawer-help">Puxe uma pasta pela aba para abrir a ficha funcional.</p>
+    <div class="cabinet">
+      <div class="drawer-in" id="drawer" role="list" aria-label="Pastas das fichas funcionais"></div>
+    </div>
+
+    <div class="rh-modal" id="rh-modal" hidden role="dialog" aria-modal="true" aria-labelledby="rh-name">
+      <div class="rh-back" id="rh-back"></div>
+      <div class="rh-folder"><span class="rh-ftab" id="rh-ftab"></span>
+        <div class="rh-tools"><button class="rh-btn" id="rh-prev">← Anterior</button><button class="rh-btn" id="rh-close">Guardar na gaveta</button><button class="rh-btn" id="rh-next">Próxima →</button></div>
+        <div class="rh-paper" id="rh-paper"></div>
+      </div>
+    </div>
+
+
+    <!-- ===== PROTÓTIPO INTERATIVO ===== -->
+    <div class="proto-bar" id="proto-bar">
+      <span class="pb-k">Protótipo</span>
+      <label for="sim-ch">Simular leitura até o capítulo <b id="sim-out">2</b></label>
+      <input type="range" id="sim-ch" min="0" max="12" value="2">
+      <button class="pb-reset" id="sim-reset">Usar meu progresso real</button>
+    </div>
+
+    <section class="hx" id="plantao">
+      <div class="hx-head"><h2>Escala de <em>plantão</em></h2><p>Semana atual. O dia de hoje fica destacado. <span style="color:#b5661a">●</span> horas de clínica obrigatórias.</p></div>
+      <div class="roster-wrap"><table class="roster" id="roster"></table></div>
+    </section>
+
+    <section class="hx" id="quadro">
+      <div class="hx-head"><h2>Quadro de <em>diagnóstico</em></h2><p>A ficha de cada caso vai sendo preenchida conforme você lê. O nome da doença só aparece no capítulo do diagnóstico.</p></div>
+      <div class="wb-tabs" role="tablist" id="wb-tabs"></div>
+      <article class="dxs" id="wb"></article>
+    </section>
+
+    <section class="hx" id="mural">
+      <div class="hx-head"><h2>Mural de <em>avisos</em></h2><p>Comunicados da Diretoria e bilhetes da equipe. Novos papéis aparecem a cada capítulo.</p></div>
+      <div class="cork" id="cork"></div>
+    </section>
+
+    <section class="hx" id="mapa">
+      <div class="hx-head"><h2>Maquete do <em>hospital</em></h2><p>Arraste para girar e use dois dedos ou a rodinha para aproximar. Toque num setor do prédio ou no totem ao lado para ver as cenas da fic que acontecem ali.</p></div>
+      <div class="map3d">
+        <div class="stage" id="stage"><canvas id="hosp3d" aria-label="Maquete 3D do Hospital Helena Ferette"></canvas><div class="stage-tip" id="stage-tip"></div><div class="stage-fallback" id="stage-fb" hidden>A maquete 3D não carregou neste aparelho. Use o totem ao lado para navegar pelos setores.</div></div>
+        <aside class="totem">
+          <div class="totem-top"><img src="hhf/icon-creme.png" alt=""><span>Orientação</span></div>
+          <ul class="totem-list" id="totem-list"></ul>
+          <div class="map-info" id="map-info"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="hx" id="arquivo">
+      <div class="hx-head"><h2>Arquivo <em>morto</em></h2><p>Prontuários dos pacientes de cada caso. Cada um destrava quando o caso começa na história.</p></div>
+      <div class="charts" id="charts"></div>
+    </section>
+
+    <div class="collage v4c" aria-hidden="true">
+      <div class="blk" style="left:20%;top:4%;width:58%;height:90%;background:#0e7c8f"></div>
+      <svg class="shapes" viewBox="0 0 1000 520" preserveAspectRatio="none">
+        <g stroke="#0d1d20" stroke-width="1.5"><line x1="300" y1="120" x2="300" y2="360"/><line x1="300" y1="360" x2="450" y2="360"/><line x1="720" y1="250" x2="790" y2="250"/></g>
+        <circle cx="450" cy="360" r="5" fill="#0d1d20"/>
+        <g fill="#e04a5f"><circle cx="330" cy="140" r="9"/><circle cx="360" cy="190" r="9"/><circle cx="345" cy="205" r="9"/><circle cx="320" cy="300" r="9"/><circle cx="380" cy="390" r="9"/><circle cx="395" cy="410" r="9"/><circle cx="365" cy="425" r="9"/></g>
+      </svg>
+      <span class="circ ph" style="left:55%;top:14%;width:22%;background:#fffdf5"><img src="hhf/v4/rosto-cirurgia.jpg" alt=""></span>
+      <span class="circ ph" style="left:55%;top:56%;width:22%;background:#2b2f31"><img src="hhf/v4/maos-cirurgia.jpg" alt="" style="opacity:.9"></span>
+      <span class="circ" style="left:32%;top:52%;width:22%;background:#fffdf5"></span>
+      <img class="cut" src="hhf/v4/cirurgiao.png" style="left:34%;top:48%;height:46%" alt="">
+      <div class="nums" style="left:22%;top:66%">983.0  12<br>186.5  22<br>853.4  33<br>720.3  78<br>136.9  88<br>262.6  82<br>502.8  48<br>657.7  65<br>374.0   4<br>472.7  41<br>489.6  68<br>268.8  23<br>341.3   4<br>280.5  23<br></div>
+    </div>
+
+    <div class="h-foot"><span>Hospital Helena Ferette · uso interno</span><span>Método Socrático</span></div>
+  </div>
+</section>
+
+<div class="reader" id="reader" hidden>
+  <div class="bar"><div class="wrap">
+    <button class="btn" id="close">← Índice</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end"><div class="themes" role="group" aria-label="Tema de leitura"><button class="th" data-t="rx" id="th-rx">Claro</button><button class="th" data-t="rxd" id="th-rxd">Escuro</button><button class="th" data-t="xr" id="th-xr">Raio-X</button></div><button class="btn" id="prev">Ant.</button><button class="btn" id="next">Próx.</button></div>
+  </div></div>
+  <article class="wrap">
+    <div class="rx-only rx-head">
+      <svg class="rx-ribbon" viewBox="0 0 250 230" aria-hidden="true"><g fill="none" stroke-linecap="round"><path d="M50,0 V90 A55,55 0 0 0 160,90 V60 A32,32 0 0 1 224,60 V230" stroke="#06879E" stroke-width="34"/><path d="M105,0 V80" stroke="#00A4C1" stroke-width="16"/></g></svg>
+      <div class="rx-logo"><img src="hhf/logo-sem-slogan.png" alt="Hospital Helena Ferette"><span>Cuidado e carinho são a nossa missão</span></div>
+      <button class="rx-doc" id="rx-doc" title="Toque para trocar de médico">
+        <span class="rx-name" id="rx-name"></span><span class="rx-esp" id="rx-esp"></span>
+        <span class="rx-reg" id="rx-reg"></span><span class="rx-hint">trocar médico ↻</span>
+      </button>
+    </div>
+    <div class="xr-only xr-tl">
+      <div>HOSPITAL HELENA FERETTE</div>
+      <button class="xr-doc" id="xr-doc" title="Toque para trocar de médico">Médico: <b id="xr-name"></b> <i class="xr-swap">trocar de médico ↻</i></button>
+      <div>ID: <span id="xr-reg"></span></div>
+      <div id="xr-esp"></div>
+      <div class="xr-r">RAIO-X</div>
+    </div>
+    <div class="xr-only xr-tr">
+      <div>Data do exame: <span id="xr-date"></span></div>
+      <div>Hora: <span id="xr-time"></span></div>
+      <div>Aquisição: <span id="xr-acq"></span></div>
+      <div class="xr-view" id="xr-view"></div>
+    </div>
+    <div class="xr-only xr-ruler" aria-hidden="true"><span>10cm</span></div>
+    <div class="kicker" id="r-kicker"></div>
+    <h2 id="r-title"></h2>
+    <div id="r-body"></div>
+    <div class="xr-only xr-bl">S : <span id="xr-s"></span><br>Z : 25 %<br>L : 2047<br>W : 4096<br>C : 2048</div>
+    <div class="xr-only xr-br"><span id="xr-pct">0</span> %</div>
+    <div class="rx-only rx-sign"><span id="rx-sign-name"></span>Assinatura e carimbo</div>
+    <div class="follow" id="r-follow" hidden>
+      <p><strong>Você chegou ao último capítulo publicado.</strong></p>
+      <p>Siga <a href="https://x.com/guillenart_" target="_blank" rel="noopener">@guillenart_</a> no X para saber quando sai o próximo.</p>
+    </div>
+  </article>
+  <div class="rx-only rx-foot"><div class="rx-addr"><span>Av. Helena Ferette, 1000 · Centro</span><span>hospitalhelenaferette.com.br</span></div><div class="rx-band"></div></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+// Capítulos de exemplo: troque títulos e textos pelos reais.
+const chapters=[
+  {act:1,t:"Capítulo 1",pub:true},
+  {act:1,t:"Capítulo 2",pub:true},
+  {act:1,t:"Capítulo 3",pub:false},
+  {act:2,t:"Capítulo 4",pub:false},
+  {act:2,t:"Capítulo 5",pub:false},
+  {act:2,t:"Método Socrático",n:10,pub:false},
+  {act:3,t:"Capítulo 11",n:11,pub:false},
+  {act:3,t:"Capítulo 12",n:12,pub:false},
+];
+chapters.forEach((c,i)=>{if(!c.n)c.n=i+1});
+const lastPub=chapters.map(c=>c.pub).lastIndexOf(true);
+const sample='<p>O texto do capítulo entra aqui, justificado, sem as notas da autora. Esta é só a amostra da tipografia de leitura: serifa confortável, linhas de largura média e respiro entre os parágrafos.</p><p>Cada capítulo tem a navegação no topo para voltar ao índice ou seguir para o próximo.</p>';
+document.querySelectorAll('.chapters').forEach(ol=>{
+  chapters.forEach((c,i)=>{if(c.act!=ol.dataset.act)return;
+    const li=document.createElement('li');
+    li.innerHTML=`<button id="ch-${c.n}" ${c.pub?'':'disabled aria-disabled="true"'}><span class="ch-n">${String(c.n).padStart(2,'0')}</span><span class="ch-t">${c.t}</span><span class="ch-s ${c.pub?'on':''}">${c.pub?'Ler':'Em breve'}</span></button>`;
+    if(c.pub)li.firstChild.onclick=()=>openCh(i);else li.firstChild.style.cursor='default',li.firstChild.style.opacity='.55';
+    ol.appendChild(li);});
+});
+const R=document.getElementById('reader');let cur=0;
+function openCh(i){cur=i;const c=chapters[i];xrStamp(c);
+  document.getElementById('r-kicker').textContent=`Ato ${['I','II','III'][c.act-1]} • ${['Fidelidade','Método Socrático','Cães Adormecidos'][c.act-1]}`;
+  {const t=document.getElementById('r-title');t.innerHTML='';const a=document.createElement('span');a.className='x1';a.textContent=c.t[0];const r=document.createElement('span');r.className='xr';r.textContent=c.t.slice(1);t.append(a,r);}
+  document.getElementById('r-body').innerHTML=sample;
+  document.getElementById('r-follow').hidden=i!==lastPub;
+  document.getElementById('prev').disabled=i===0;
+  document.getElementById('next').disabled=i>=lastPub;
+  R.hidden=false;R.scrollTop=0;document.body.style.overflow='hidden';}
+document.getElementById('close').onclick=()=>{R.hidden=true;document.body.style.overflow=''};
+document.getElementById('prev').onclick=()=>cur>0&&openCh(cur-1);
+document.getElementById('next').onclick=()=>cur<lastPub&&openCh(cur+1);
+
+
+
+// filme de raio-x: data, hora real e progresso de leitura
+const pad=n=>String(n).padStart(2,'0');
+function xrClock(){const d=new Date();document.getElementById('xr-date').textContent=`${pad(d.getDate())}-${pad(d.getMonth()+1)}-${d.getFullYear()}`;document.getElementById('xr-time').textContent=`${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`}
+function xrStamp(c){const d=new Date();document.getElementById('xr-acq').textContent=`${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;document.getElementById('xr-view').textContent=`ATO ${['I','II','III'][c.act-1]} · CAP ${pad(c.n)} AP`;document.getElementById('xr-s').textContent=90+c.n;document.getElementById('xr-pct').textContent='0'}
+xrClock();setInterval(xrClock,1000);
+document.getElementById('reader').addEventListener('scroll',e=>{const r=e.target;const m=r.scrollHeight-r.clientHeight;document.getElementById('xr-pct').textContent=m>0?Math.round(r.scrollTop/m*100):100});
+// tema claro do leitor: receituário
+const docs=[
+ {n:'Dra. Eduarda',e:'Nefrologia · Diagnóstico',r:'HHF-0034'},
+ {n:'Dra. Lorena Ferette',e:'Psiquiatria · Diretoria geral',r:'HHF-0412'},
+ {n:'Dra. Leandra Ferette',e:'Hepatologia · Clínica médica',r:'HHF-0233'},
+ {n:'Dra. Lucélia',e:'Chefia de departamento',r:'HHF-0187'},
+ {n:'Dr. Victor',e:'Residência · Diagnóstico',r:'HHF-0561'},
+ {n:'Dra. Joélly',e:'Residência · Diagnóstico',r:'HHF-0562'},
+ {n:'Dr. Toy',e:'Residência · Diagnóstico',r:'HHF-0563'}];
+let di=0,theme='xr';
+try{di=+(localStorage.getItem('ms-doc')||0)%docs.length;theme=({rx:'rx',rxd:'rxd',dark:'xr',xr:'xr'})[localStorage.getItem('ms-theme')]||'xr'}catch(e){}
+function paintDoc(){const d=docs[di];document.getElementById('xr-name').textContent=d.n.toUpperCase();document.getElementById('xr-reg').textContent=d.r;document.getElementById('xr-esp').textContent=d.e;document.getElementById('rx-name').textContent=d.n;document.getElementById('rx-esp').textContent=d.e;document.getElementById('rx-reg').textContent='Registro '+d.r;document.getElementById('rx-sign-name').textContent=d.n}
+function paintTheme(){R.classList.toggle('rx',theme!=='xr');R.classList.toggle('dk',theme==='rxd');document.querySelectorAll('.th').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===theme));const lg=document.querySelector('.rx-logo img');if(lg)lg.src=theme==='rxd'?'hhf/logo-dark.png':'hhf/logo-sem-slogan.png'}
+document.getElementById('xr-doc').onclick=()=>document.getElementById('rx-doc').click();
+document.getElementById('rx-doc').onclick=()=>{di=(di+1)%docs.length;paintDoc();try{localStorage.setItem('ms-doc',di)}catch(e){}};
+document.querySelectorAll('.th').forEach(b=>b.onclick=()=>{theme=b.dataset.t;paintTheme();try{localStorage.setItem('ms-theme',theme)}catch(e){}});
+paintDoc();paintTheme();
+
+// ===== PROTÓTIPO INTERATIVO DA ABA DO HOSPITAL =====
+// Progresso do leitor: o maior capítulo já aberto (ou o valor do simulador).
+let simCh=null;try{const v=localStorage.getItem('ms-sim');if(v!==null)simCh=+v}catch(e){}
+function readMax(){try{return +(localStorage.getItem('ms-max')||0)}catch(e){return 0}}
+function progress(){return simCh!==null?simCh:readMax()}
+const _openCh=openCh;openCh=function(i){_openCh(i);const n=chapters[i].n;if(n>readMax()){try{localStorage.setItem('ms-max',n)}catch(e){}}};
+const simIn=document.getElementById('sim-ch'),simOut=document.getElementById('sim-out');
+function syncSim(){simIn.value=progress();simOut.textContent=progress()}
+simIn.oninput=()=>{simCh=+simIn.value;try{localStorage.setItem('ms-sim',simCh)}catch(e){}renderAll()};
+document.getElementById('sim-reset').onclick=()=>{simCh=null;try{localStorage.removeItem('ms-sim')}catch(e){}renderAll()};
+
+// 1) Escala de plantão (exemplo)
+const dias=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+const escala={'Diurno':[['Leandra','Victor'],['Lucélia','Joélly'],['Leandra','Toy'],['Lucélia','Victor'],['Leandra','Joélly'],['Toy'],['Victor']],
+ 'Noturno':[['Toy'],['Victor'],['Joélly'],['Toy'],['Victor'],['Leandra','Joélly'],['Lucélia','Toy']],
+ 'Ambulatório':[['Eduarda*'],['Eduarda*'],['Eduarda*'],['Eduarda*'],['Eduarda*'],[],[]],
+ 'Diretoria':[['Lorena'],['Lorena'],['Lorena'],['Lorena'],['Lorena'],[],[]]};
+function renderRoster(){const t=(new Date().getDay()+6)%7;
+ document.getElementById('roster').innerHTML=`<thead><tr><th></th>${dias.map((d,i)=>`<th class="${i===t?'today':''}">${d}</th>`).join('')}</tr></thead><tbody>${Object.entries(escala).map(([k,row])=>`<tr><th>${k}</th>${row.map((c,i)=>`<td class="${i===t?'today':''}">${c.map(n=>n.endsWith('*')?`<span class="w" title="Horas de clínica">${n.slice(0,-1)} ●</span>`:`<span>${n}</span>`).join('')||'—'}</td>`).join('')}</tr>`).join('')}</tbody>`}
+
+// 2) Ficha de diagnóstico (conteúdo de exemplo, inspirado nos episódios)
+const IC={
+ etio:'<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/>',
+ sint:'<path d="M6 3v6a4 4 0 0 0 8 0V3"/><path d="M10 13v3a4 4 0 0 0 8 0v-2"/><circle cx="18" cy="12" r="2"/>',
+ comp:'<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17v.5"/>',
+ ex:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7.5 15h9"/>',
+ trat:'<rect x="3" y="8" width="18" height="8" rx="4" transform="rotate(-35 12 12)"/><path d="m9.5 8.5 5 7"/>',
+ interv:'<path d="M12 4v16M4 12h16"/><circle cx="12" cy="12" r="9"/>',
+ orient:'<path d="M3 5h7a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H3zM21 5h-7a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h7z"/>',
+ ddx:'<circle cx="12" cy="12" r="9"/><path d="m8 8 8 8M16 8l-8 8"/>'};
+const SEC=[['etio','Etiologia e fisiopatologia','t1'],['sint','Sinais e sintomas','t2'],['comp','Complicações','t3'],['ex','Exames diagnósticos','t4'],['trat','Tratamento','t2'],['interv','Intervenções','t1'],['orient','Orientações ao paciente','t4'],['ddx','Hipóteses descartadas','t3']];
+const casos=[
+ {t:'Caso 1',pac:'Paciente do Ato I',ep:'inspirado no episódio "Fidelity" (Temporada 1 Episódio 7)',dx:'Diagnóstico do caso 1',rev:3,med:'Dra. Eduarda',
+  f:{etio:[['Origem ainda desconhecida',1],['Possível agente infeccioso',3]],sint:[['Sonolência excessiva',1],['Febre',1],['Confusão mental',2],['Alteração de humor',2]],comp:[['Rebaixamento de consciência',2]],ex:[['Hemograma',1],['Punção lombar',2],['Esfregaço de sangue',3]],trat:[['Suporte clínico',1],['Tratamento específico',3]],interv:[['Monitorização neurológica',1]],orient:[['Repouso e acompanhamento',3]],ddx:[['Depressão',1],['Encefalite',2]]}},
+ {t:'Caso 2',pac:'A mãe · Ato II',ep:'inspirado no episódio "The Socratic Method" (Temporada 1 Episódio 6)',dx:'Diagnóstico do caso 2',rev:10,med:'Dra. Eduarda',
+  f:{etio:[['Histórico psiquiátrico prévio',4],['Causa orgânica suspeita',10]],sint:[['Trombose venosa profunda',4],['Alucinações',4],['Sangramento',5],['Alteração hepática',5]],comp:[['Risco de embolia',4],['Insuficiência hepática',10]],ex:[['Ultrassom de membros',4],['Função hepática',5],['Biópsia',10]],trat:[['Anticoagulação',4],['Tratamento da causa',10]],interv:[['Avaliação da psiquiatria',4]],orient:[['Acompanhamento do filho',5]],ddx:[['Esquizofrenia',5],['Efeito colateral',10]]}},
+ {t:'Caso 3',pac:'Maíra · Ato III',ep:'inspirado no episódio "Sleeping Dogs Lie" (Temporada 2 Episódio 18)',dx:'Diagnóstico do caso 3',rev:12,med:'Dra. Eduarda',
+  f:{etio:[['A investigar',11]],sint:[['Insônia persistente',11],['Fadiga',11],['Dor abdominal',12]],comp:[['Falência hepática',12]],ex:[['Exames laboratoriais',11],['Imagem abdominal',12]],trat:[['Suporte intensivo',12]],interv:[['Avaliação para transplante',12]],orient:[['Presença da acompanhante (Irina)',11]],ddx:[['Hepatite',11],['Intoxicação',12]]}}];
+let caso=0;
+function renderWB(){const pr=progress();
+ document.getElementById('wb-tabs').innerHTML=casos.map((c,i)=>`<button role="tab" id="wb-t${i}" aria-selected="${i===caso}">${c.t}</button>`).join('');
+ document.querySelectorAll('#wb-tabs button').forEach((b,i)=>b.onclick=()=>{caso=i;renderWB()});
+ const c=casos[caso];
+ const box=([k,lab,tone])=>{const items=c.f[k]||[];return `<section class="dx-box ${tone} dx-${k}"><h4><span class="ic"><svg viewBox="0 0 24 24">${IC[k]}</svg></span>${lab}</h4><ul>${items.map(([t,ch])=>ch<=pr?`<li${k==='ddx'?' class="x"':''}>${t}</li>`:`<li class="lock">??? <small>cap. ${ch}</small></li>`).join('')||'<li class="lock">—</li>'}</ul></section>`};
+ document.getElementById('wb').innerHTML=`<header class="dx-top"><div class="dx-word">Doença</div>
+  <div class="dx-field">${pr>=c.rev?`<b>${c.dx}</b>`:`<span>Revelado no capítulo ${c.rev}</span>`}</div>
+  <div class="dx-meta"><b>${c.pac}</b><span>${c.ep} · ${c.med}</span></div></header>
+  <div class="dx-grid">${SEC.map(box).join('')}</div>
+  <footer class="dx-ft"><span>Hospital Helena Ferette · Departamento de Diagnóstico</span><span>Ficha de caso clínico</span></footer>`}
+
+// 3) Mural de avisos (textos de exemplo)
+const avisos=[
+ {ch:0,k:'memo',h:'Comunicado da Diretoria',t:'A partir desta semana, o ambulatório funciona em regime de plantão estendido.',a:'Dra. Lorena Ferette'},
+ {ch:1,k:'post',t:'Quem pegou meu estetoscópio deixa de volta na sala 3!!',a:'Joélly'},
+ {ch:2,k:'post b',t:'Reunião de equipe às 7h. Café por conta do Victor.',a:'Toy'},
+ {ch:3,k:'memo',h:'Departamento de Pessoal',t:'Lembrete: horas de clínica precisam ser registradas no ponto do ambulatório.',a:'RH'},
+ {ch:4,k:'post',t:'Leito 12 pediu visita da psiquiatria.',a:'Enfermagem'},
+ {ch:10,k:'memo',h:'Conselho de Administração',t:'Reunião extraordinária na sala da Diretoria.',a:'Afonso Ferette'}];
+function renderCork(){const pr=progress();
+ document.getElementById('cork').innerHTML=avisos.map(n=>n.ch<=pr?`<div class="note ${n.k}">${n.h?`<b>${n.h}</b>`:''}${n.t}<small>— ${n.a}${n.ch?` · cap. ${n.ch}`:''}</small></div>`:`<div class="note down">Papel virado<br>aparece no capítulo ${n.ch}</div>`).join('')}
+
+// 4) Maquete 3D do hospital (cenas de exemplo)
+const salas=[
+ {id:'dir',n:'Diretoria',fl:'5',sub:'Torre · último andar',c:[[1,'Lorena assume a Diretoria'],[10,'Reunião do Conselho']]},
+ {id:'cc',n:'Centro cirúrgico',fl:'4',sub:'Torre',c:[[12,'Cirurgia do caso 3']]},
+ {id:'dx',n:'Diagnóstico',fl:'3',sub:'Torre · sala da equipe',c:[[2,'Quadro branco do caso 1'],[5,'Diagnóstico diferencial do caso 2']]},
+ {id:'leste',n:'Ala leste',fl:'1·2',sub:'Internação',c:[[3,'Visita ao leito 12'],[11,'Internação da Maíra']]},
+ {id:'amb',n:'Ambulatório',fl:'T',sub:'Ala oeste · térreo',c:[[1,'Primeiro dia de horas de clínica'],[4,'Consulta da mãe e do filho']]},
+ {id:'rec',n:'Recepção',fl:'T',sub:'Entrada principal',c:[[1,'Chegada de Eduarda ao hospital']]},
+ {id:'cafe',n:'Copa',fl:'T',sub:'Anexo',c:[[2,'Café da equipe']]}];
+let sala='amb';
+function renderMap(){const pr=progress();
+ const tl=document.getElementById('totem-list');
+ tl.innerHTML=salas.map(r=>`<li><button data-id="${r.id}" aria-pressed="${r.id===sala}"><span class="fl">${r.fl}</span><span class="nm">${r.n}<small>${r.sub}</small></span><span class="ar">→</span></button></li>`).join('');
+ tl.querySelectorAll('button').forEach(b=>b.onclick=()=>selectSala(b.dataset.id));
+ const r=salas.find(x=>x.id===sala);
+ document.getElementById('map-info').innerHTML=`<h3>${r.n}</h3><p>Cenas que acontecem aqui</p><ul>${r.c.map(([ch,t])=>ch<=pr?`<li><b>CAP ${String(ch).padStart(2,'0')}</b>${t}</li>`:`<li class="lock"><b>CAP ${String(ch).padStart(2,'0')}</b>Cena ainda não lida</li>`).join('')}</ul>`;
+ if(window.hospApi)hospApi.highlight(sala)}
+function selectSala(id){sala=id;renderMap()}
+
+// ---- cena 3D ----
+(function(){
+ const canvas=document.getElementById('hosp3d'),stage=document.getElementById('stage');
+ if(!window.THREE){document.getElementById('stage-fb').hidden=false;return}
+ let renderer;try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true})}catch(e){document.getElementById('stage-fb').hidden=false;return}
+ renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+ renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+ const scene=new THREE.Scene();
+ const cam=new THREE.PerspectiveCamera(38,1,0.1,500);cam.position.set(60,40,74);
+ const ctl=new THREE.OrbitControls(cam,canvas);ctl.target.set(0,9,-4);ctl.enableDamping=true;ctl.minDistance=45;ctl.maxDistance=170;ctl.maxPolarAngle=Math.PI*0.47;ctl.enablePan=false;
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;ctl.autoRotate=!reduce;ctl.autoRotateSpeed=0.6;
+ canvas.addEventListener('pointerdown',()=>{ctl.autoRotate=false});
+ scene.add(new THREE.HemisphereLight(0xffffff,0xd8e4e2,0.85));
+ const sun=new THREE.DirectionalLight(0xffffff,0.75);sun.position.set(40,70,50);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+ Object.assign(sun.shadow.camera,{left:-60,right:60,top:60,bottom:-60});scene.add(sun);
+ const M=(c,o={})=>new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.85,metalness:0},o));
+ const WHITE=0xf3f1ea,GREY=0x8f9aa0,GLASS=0x5fa9bf,TEAL=0x06879E,AQUA=0x00A4C1;
+ // chão
+ const ground=new THREE.Mesh(new THREE.PlaneGeometry(260,260),M(0xe9e6dc));ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
+ const road=new THREE.Mesh(new THREE.PlaneGeometry(200,14),M(0x9da3a6));road.rotation.x=-Math.PI/2;road.position.set(0,.02,30);road.receiveShadow=true;scene.add(road);
+ for(let i=-6;i<=6;i++){const z=new THREE.Mesh(new THREE.PlaneGeometry(2.2,.6),M(0xffffff));z.rotation.x=-Math.PI/2;z.position.set(i*1.6-12,.03,24);if(Math.abs(i)<4)scene.add(z)}
+ for(let i=0;i<7;i++){const st=new THREE.Mesh(new THREE.PlaneGeometry(.6,14),M(0xf7f5ee));st.rotation.x=-Math.PI/2;st.position.set(-1.2*0-6+i*2.4,.03,30);scene.add(st)}
+ const lawn=new THREE.Mesh(new THREE.PlaneGeometry(120,8),M(0x9fc48f));lawn.rotation.x=-Math.PI/2;lawn.position.set(0,.025,19);scene.add(lawn);
+ const tree=(x,z,s=1)=>{const t=new THREE.Mesh(new THREE.CylinderGeometry(.25*s,.3*s,2.2*s,8),M(0x8a6a4a));t.position.set(x,1.1*s,z);t.castShadow=true;scene.add(t);const c=new THREE.Mesh(new THREE.SphereGeometry(1.7*s,14,10),M(0x7fae7a));c.position.set(x,3.2*s,z);c.castShadow=true;scene.add(c)};
+ [[-28,19],[-20,20],[22,19],[30,20],[-36,4],[36,2],[-34,-14],[38,-12]].forEach(([x,z],i)=>tree(x,z,.9+(i%3)*.15));
+ // setores (cada um é um grupo clicável)
+ const groups={},pick=[];
+ function block(id,{x,y=0,z,w,h,d,floors=2,glassFront=true,col=WHITE}){
+  const g=groups[id]||(groups[id]=new THREE.Group());g.userData.id=id;
+  const body=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),M(col));body.position.set(x,y+h/2,z);body.castShadow=body.receiveShadow=true;body.userData.base=col;g.add(body);pick.push(body);body.userData.id=id;
+  const fh=h/floors;
+  for(let f=0;f<floors;f++){ if(glassFront){const gl=new THREE.Mesh(new THREE.BoxGeometry(w*.86,fh*.42,.2),M(GLASS,{roughness:.2,metalness:.3}));gl.position.set(x,y+fh*f+fh*.55,z+d/2+.05);g.add(gl);pick.push(gl);gl.userData.id=id;gl.userData.base=GLASS}
+   const band=new THREE.Mesh(new THREE.BoxGeometry(w+.1,.25,d+.1),M(GREY));band.position.set(x,y+fh*(f+1),z);g.add(band)}
+  scene.add(g);return g}
+ // pódio: ambulatório (oeste), recepção (centro), ala leste
+ block('amb',{x:-17,z:2,w:18,h:8,d:16,floors:2});
+ block('rec',{x:0,z:3,w:16,h:8,d:18,floors:2,glassFront:false});
+ block('leste',{x:18,z:1,w:20,h:11,d:15,floors:3});
+ block('cafe',{x:-30,z:-10,w:10,h:5,d:10,floors:1});
+ // fachada de vidro da recepção + marquise
+ const rg=new THREE.Mesh(new THREE.BoxGeometry(12,6,.3),M(GLASS,{roughness:.15,metalness:.3}));rg.position.set(0,3,12.1);groups.rec.add(rg);pick.push(rg);rg.userData={id:'rec',base:GLASS};
+ const can=new THREE.Mesh(new THREE.BoxGeometry(18,.7,7),M(0x6f7a80));can.position.set(0,6.2,14.5);can.castShadow=true;groups.rec.add(can);pick.push(can);can.userData={id:'rec',base:0x6f7a80};
+ [[-8,17.5],[8,17.5]].forEach(([x,z])=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(.3,.3,6,10),M(GREY));c.position.set(x,3,z);groups.rec.add(c)});
+ const steps=new THREE.Mesh(new THREE.BoxGeometry(14,.6,4),M(0xd9d6cc));steps.position.set(0,.3,15);scene.add(steps);
+ // torre: diagnóstico, centro cirúrgico, diretoria
+ const T={x:-2,z:-9,w:24,d:12};
+ block('dx',{...T,y:8,h:8,floors:2});block('cc',{...T,y:16,h:8,floors:2});block('dir',{...T,y:24,h:5,floors:1});
+ const base=new THREE.Mesh(new THREE.BoxGeometry(24,8,12),M(WHITE));base.position.set(T.x,4,T.z);base.castShadow=true;scene.add(base);
+ const glassCol=new THREE.Mesh(new THREE.BoxGeometry(5,29.4,.4),M(0x3f7f99,{roughness:.15,metalness:.4}));glassCol.position.set(T.x+8,14.7,T.z+6.15);scene.add(glassCol);
+ const roof=new THREE.Mesh(new THREE.BoxGeometry(6,2,5),M(GREY));roof.position.set(T.x-5,30,T.z-2);scene.add(roof);
+ // letreiros com a logo
+ const icon=new Image();icon.src='hhf/icon-azul.png';
+ function sign(w,h,draw,pos,parent=scene){const cv=document.createElement('canvas');cv.width=w;cv.height=h;const tex=new THREE.CanvasTexture(cv);tex.anisotropy=8;
+  const mat=new THREE.MeshBasicMaterial({map:tex,transparent:true});const m=new THREE.Mesh(new THREE.PlaneGeometry(pos.w,pos.w*h/w),mat);m.position.set(pos.x,pos.y,pos.z);parent.add(m);
+  const paint=()=>{const c=cv.getContext('2d');c.clearRect(0,0,w,h);draw(c,w,h);tex.needsUpdate=true};paint();icon.onload=()=>{paints.forEach(f=>f())};paints.push(paint);return m}
+ const paints=[];
+ const brand=(c,w,h,dark)=>{const ih=h*.8;if(icon.complete&&icon.naturalWidth)c.drawImage(icon,0,h*.1,ih*icon.naturalWidth/icon.naturalHeight,ih);
+  c.fillStyle=dark?'#06879E':'#06879E';c.font=`700 ${h*.24}px Figtree, Inter, sans-serif`;c.textBaseline='alphabetic';c.fillText('HOSPITAL',ih*1.1,h*.34);
+  c.font=`700 ${h*.42}px Figtree, Inter, sans-serif`;c.fillText('Helena Ferette',ih*1.07,h*.78)};
+ sign(1400,300,(c,w,h)=>brand(c,w,h),{x:0,y:9.6,z:12.06,w:14});
+ sign(1400,300,(c,w,h)=>brand(c,w,h),{x:-5,y:27,z:-2.9,w:12});
+ sign(900,320,(c,w,h)=>{c.fillStyle='#06879E';c.font=`italic 500 ${h*.24}px Figtree, Inter, sans-serif`;c.fillText('Cuidado e carinho',0,h*.4);c.fillText('são a nossa missão',0,h*.75)},{x:-17,y:6.4,z:10.06,w:9});
+ // totem externo
+ const tot=new THREE.Mesh(new THREE.BoxGeometry(2.4,6,.5),M(TEAL));tot.position.set(14,3,21);tot.castShadow=true;scene.add(tot);
+ sign(240,600,(c,w,h)=>{c.fillStyle='#FFFDF5';c.font=`600 ${w*.13}px Figtree, sans-serif`;['Emergência','Ambulatório','Internação','Diagnóstico','Diretoria'].forEach((t,i)=>{c.fillText('← '+t,w*.08,h*.22+i*h*.15)})},{x:14,y:3.1,z:21.26,w:2.2});
+ // bandeiras
+ [[-40,14],[-38,14],[-36,14]].forEach(([x,z],i)=>{const p=new THREE.Mesh(new THREE.CylinderGeometry(.08,.08,10,6),M(0xcfd3d5));p.position.set(x,5,z);scene.add(p);const f=new THREE.Mesh(new THREE.PlaneGeometry(2,1.2),M([TEAL,AQUA,0xFFFDF5][i],{side:THREE.DoubleSide}));f.position.set(x+1,9.2,z);scene.add(f)});
+ // destaque
+ const hl=new THREE.Color(AQUA);
+ window.hospApi={highlight(id){Object.values(groups).forEach(g=>g.traverse(o=>{if(o.isMesh&&o.userData.base!==undefined){const on=g.userData.id===id;o.material.color.set(on?(o.userData.base===GLASS?0x06879E:0x9fe3ee):o.userData.base);o.material.emissive=new THREE.Color(on?0x022a31:0x000000)}}))}};
+ // interação
+ const ray=new THREE.Raycaster(),mp=new THREE.Vector2(),tip=document.getElementById('stage-tip');let down=null;
+ function hit(e){const r=canvas.getBoundingClientRect();mp.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);ray.setFromCamera(mp,cam);const h=ray.intersectObjects(pick,false)[0];return h&&h.object.userData.id}
+ canvas.addEventListener('pointermove',e=>{const id=hit(e);canvas.style.cursor=id?'pointer':'grab';if(id){const s=salas.find(x=>x.id===id);tip.textContent=s.n;tip.classList.add('on')}else tip.classList.remove('on')});
+ canvas.addEventListener('pointerleave',()=>tip.classList.remove('on'));
+ canvas.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY]});
+ canvas.addEventListener('pointerup',e=>{if(down&&Math.hypot(e.clientX-down[0],e.clientY-down[1])<6){const id=hit(e);if(id)selectSala(id)}down=null});
+ function size(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.fov=w/h<1?44:36;cam.updateProjectionMatrix()}
+ new ResizeObserver(size).observe(stage);size();
+ (function loop(){if(stage.offsetParent!==null){ctl.update();renderer.render(scene,cam)}requestAnimationFrame(loop)})();
+ hospApi.highlight(sala);
+})();
+
+// 5) Arquivo morto: prontuários dos pacientes
+const pront=[
+ {k:'PRT-1101',n:'Paciente do Ato I',ch:1,dados:[['Ato','I'],['Inspiração','Episódio "Fidelity" (Temporada 1 Episódio 7)'],['Médica responsável','Dra. Eduarda'],['Situação','Em investigação']]},
+ {k:'PRT-2204',n:'A mãe e o filho',ch:4,dados:[['Ato','II'],['Inspiração','Episódio "The Socratic Method" (Temporada 1 Episódio 6)'],['Médica responsável','Dra. Eduarda'],['Situação','Em investigação']]},
+ {k:'PRT-3312',n:'Maíra',ch:11,dados:[['Ato','III'],['Inspiração','Episódio "Sleeping Dogs Lie" (Temporada 2 Episódio 18)'],['Acompanhante','Irina'],['Situação','Em investigação']]}];
+let pOpen=null;
+function renderCharts(){const pr=progress();const el=document.getElementById('charts');
+ el.innerHTML=pront.map((p,i)=>`<button class="chart${p.ch>pr?' lock':''}" data-i="${i}" ${p.ch>pr?'aria-disabled="true"':''}><div class="k">${p.k}</div><h3>${p.ch>pr?'Prontuário lacrado':p.n}</h3><p>${p.ch>pr?`Liberado no capítulo ${p.ch}`:'Toque para abrir'}</p></button>`).join('')+
+  (pOpen!==null&&pront[pOpen].ch<=pr?`<div class="chart-open" style="grid-column:1/-1"><h3>${pront[pOpen].n} · ${pront[pOpen].k}</h3><dl>${pront[pOpen].dados.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl><div style="color:var(--h-soft);font-size:13px">Anotações clínicas de exemplo. O texto real entra aqui.</div></div>`:'');
+ el.querySelectorAll('.chart').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(pront[i].ch>progress())return;pOpen=pOpen===i?null:i;renderCharts()})}
+
+
+// LINHA DO TEMPO DA FIC (capítulos de exemplo; cada marco só aparece depois de lido)
+const marcos=[
+ {q:'Faculdade',t:'O começo',d:'Eduarda e Lorena se conhecem na faculdade de Medicina.',ch:1},
+ {q:'Quatro anos',t:'O namoro',d:'As duas namoram por quatro anos, sem nunca se casar.',ch:1},
+ {q:'Residência',t:'Nefrologia',d:'Eduarda entra na residência de nefrologia no Hospital Ferette.',ch:2},
+ {q:'Residência',t:'O segredo',d:'Eduarda passa a depender de remédios. Leandra acoberta a melhor amiga.',ch:3},
+ {q:'Aprovação',t:'Londres',d:'Lorena é aprovada para a residência em Londres e pensa em desistir.',ch:4},
+ {q:'A queda',t:'A demissão',d:'Provas do vício aparecem na sala de Afonso, e Eduarda é demitida.',ch:5},
+ {q:'Partida',t:'Lorena vai embora',d:'Lorena parte para Londres achando que sabe quem a traiu.',ch:5},
+ {q:'Dois anos',t:'Tratamento',d:'Afastada, Eduarda se trata, frequenta o grupo de apoio e fica limpa.',ch:6},
+ {q:'Hoje',t:'A volta',d:'Eduarda volta ao Hospital Helena Ferette, e a nova diretora é Lorena.',ch:1,now:true},
+ {q:'A verdade',t:'Quem plantou as provas',d:'Eduarda conta a Lorena o que realmente aconteceu.',ch:12}];
+function renderTimeline(){const pr=progress();const el=document.getElementById('tl');if(!el)return;
+ el.innerHTML=marcos.map(m=>m.ch<=pr?`<li class="${m.now?'now':''}"><div class="when">${m.q}</div><h3>${m.t}</h3><p>${m.d}</p><span class="ch">Capítulo ${m.ch}</span></li>`:`<li class="lock"><div class="when">? ? ?</div><h3>· · ·</h3><p>Liberado depois do capítulo ${m.ch}</p></li>`).join('')}
+
+function renderAll(){syncSim();renderTimeline();renderRoster();renderWB();renderCork();renderMap();renderCharts()}
+renderAll();
+addEventListener('hashchange',renderAll);
+// riscos finos e pontos, como no pôster
+const cv=document.getElementById('scratch'),ctx=cv.getContext('2d');
+function draw(){const d=devicePixelRatio||1,w=innerWidth,h=innerHeight;cv.width=w*d;cv.height=h*d;ctx.setTransform(d,0,0,d,0,0);ctx.clearRect(0,0,w,h);
+  let s=42;const r=()=>(s=(s*16807)%2147483647)/2147483647;
+  for(let i=0;i<14;i++){const x=r()*w,y=r()*h,len=200+r()*500;
+    ctx.strokeStyle=`rgba(236,228,220,${.08+r()*.18})`;ctx.lineWidth=.6+r()*.6;
+    ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+len*.75,y-len*.62);ctx.stroke();
+    if(r()>.5){ctx.fillStyle='rgba(236,228,220,.7)';ctx.beginPath();ctx.arc(x+len*.5,y-len*.41,1.5+r()*2.5,0,7);ctx.fill();}}
+  for(let i=0;i<10;i++){ctx.fillStyle='rgba(236,228,220,.55)';ctx.beginPath();ctx.arc(r()*w,r()*h,1+r()*2,0,7);ctx.fill();}}
+draw();addEventListener('resize',draw);
+// Fichas do Hospital Helena Ferette. Para pôr foto, preencha "foto" com o nome do arquivo.
+const staff=[
+  {g:'adm',id:'0001',nome:'Afonso Ferette',cargo:'Proprietário do hospital',esp:'Administração',idade:'78',setor:'Conselho',status:['ok','Ativo'],tom:'ht-grey'},
+  {g:'adm',id:'0412',nome:'Lorena Ferette',cargo:'Diretora geral',esp:'Psiquiatria',idade:'33',setor:'Diretoria',status:['ok','Ativa · retorno de Londres'],tom:'ht-teal'},
+  {g:'clin',id:'0187',nome:'Lucélia',cargo:'Chefe de departamento',esp:'—',idade:'—',setor:'Chefia',status:['ok','Ativa'],tom:'ht-red2'},
+  {g:'clin',id:'0233',nome:'Leandra Ferette',cargo:'Médica hepatologista',esp:'Hepatologia',idade:'33',setor:'Clínica médica',status:['ok','Ativa'],tom:'ht-red',cracha:'hhf/leandra-cracha.jpg'},
+  {g:'clin',id:'0034',nome:'Eduarda',cargo:'Médica nefrologista',esp:'Nefrologia',idade:'34',setor:'Diagnóstico',status:['warn','Readmitida · horas de clínica'],tom:'ht-grey',cracha:'hhf/eduarda-cracha.jpg?v=2'},
+  {g:'res',id:'0561',nome:'Victor',cargo:'Médico residente',esp:'Equipe da Dra. Eduarda',idade:'—',setor:'Diagnóstico',status:['ok','Residência em curso'],tom:'ht-teal',cracha:'hhf/victor-cracha.jpg'},
+  {g:'res',id:'0562',nome:'Joélly',cargo:'Médica residente',esp:'Equipe da Dra. Eduarda',idade:'—',setor:'Diagnóstico',status:['ok','Residência em curso'],tom:'ht-red'},
+  {g:'res',id:'0563',nome:'Toy',cargo:'Médico residente',esp:'Equipe da Dra. Eduarda',idade:'—',setor:'Diagnóstico',status:['ok','Residência em curso'],tom:'ht-grey',cracha:'hhf/toy-cracha.jpg'},
+];
+
+// ===== ARQUIVO DO RH: gaveta e fichas =====
+const rh={
+ '0001':{chips:['Administração','Conselho'],chefia:'—',equipe:'—',contato:'Lorena Ferette',crm:'Não se aplica',readm:'Não se aplica',regime:'Conselho de Administração',carimbo:['CONSELHO','PROPRIETÁRIO'],obs:'Proprietário do hospital. Preside o Conselho de Administração.',ass:['Conselho de Administração','Presidência']},
+ '0412':{chips:['Administração','Diretoria'],chefia:'Afonso Ferette',equipe:'—',contato:'Leandra Ferette',crm:'__________',readm:'Não se aplica',regime:'Diretoria geral',carimbo:['DIRETORIA','GERAL'],obs:'Assumiu a Diretoria geral por indicação do Conselho, após o retorno da residência em Londres.',ass:['Afonso Ferette','Conselho de Administração']},
+ '0187':{chips:['Corpo clínico','Chefia'],chefia:'Diretoria geral',equipe:'Corpo clínico',contato:'—',crm:'__________',readm:'Não se aplica',regime:'Chefia de departamento',carimbo:['CHEFIA','DEPARTAMENTO'],obs:'Chefe de departamento. Responsável pelas escalas e pelos relatórios da equipe médica.'},
+ '0233':{chips:['Corpo clínico','Clínica médica'],chefia:'Chefia de departamento',equipe:'—',contato:'Lorena Ferette',crm:'__________',readm:'Não se aplica',regime:'Plantão',carimbo:['ATIVA','CORPO CLÍNICO'],obs:'Médica do corpo clínico, lotada na Clínica médica.'},
+ '0034':{chips:['Corpo clínico','Diagnóstico'],warn:'Horas de clínica',chefia:'Lucélia',equipe:'Victor · Joélly · Toy',contato:'Leandra Ferette',crm:'__________',readm:'—',regime:'Plantão + clínica',carimbo:['READMITIDA','DIRETORIA GERAL'],w:true,obs:'Readmissão aprovada pela Diretoria após análise do Conselho. Cumprimento obrigatório de horas no ambulatório, com relatório mensal à chefia do departamento.'},
+ '0561':{chips:['Residentes','Diagnóstico'],chefia:'Dra. Eduarda',equipe:'Joélly · Toy',contato:'—',crm:'__________',readm:'Não se aplica',regime:'Residência',carimbo:['RESIDENTE','EM CURSO'],obs:'Residente da equipe de Diagnóstico, sob preceptoria da Dra. Eduarda.'},
+ '0562':{chips:['Residentes','Diagnóstico'],chefia:'Dra. Eduarda',equipe:'Victor · Toy',contato:'—',crm:'__________',readm:'Não se aplica',regime:'Residência',carimbo:['RESIDENTE','EM CURSO'],obs:'Residente da equipe de Diagnóstico, sob preceptoria da Dra. Eduarda.'},
+ '0563':{chips:['Residentes','Diagnóstico'],chefia:'Dra. Eduarda',equipe:'Victor · Joélly',contato:'—',crm:'__________',readm:'Não se aplica',regime:'Residência',carimbo:['RESIDENTE','EM CURSO'],obs:'Residente da equipe de Diagnóstico, sob preceptoria da Dra. Eduarda.'}};
+const files=[...staff].sort((a,b)=>a.nome.localeCompare(b.nome,'pt'));
+const drawer=document.getElementById('drawer');
+drawer.style.setProperty('--n',files.length);
+const narrow=()=>innerWidth<640;
+function buildDrawer(){const step=narrow()?46:40,cols=narrow()?2:4;
+ drawer.innerHTML=files.map((p,i)=>`<button class="folder" role="listitem" id="pasta-${p.id}" data-i="${i}" style="top:${18+i*step}px;z-index:${i+1}" aria-label="Abrir ficha de ${p.nome}">
+  <div class="ftab" style="left:${(i%cols)*(narrow()?54:25.33)}%"><span>${p.nome}</span><small>${p.id}</small></div><div class="body"></div></button>`).join('');
+ drawer.querySelectorAll('.folder').forEach(f=>f.onclick=()=>openFile(+f.dataset.i));}
+buildDrawer();let lastNarrow=narrow();addEventListener('resize',()=>{if(narrow()!==lastNarrow){lastNarrow=narrow();buildDrawer()}});
+document.getElementById('h-count').textContent=`${files.length} pastas`;
+const fld=(l,v)=>`<div class="rh-f"><span>${l}</span><b>${v}</b></div>`;
+function ficha(p){const d=rh[p.id];return `<article class="rh">
+ <div class="band"></div>
+ <div class="rh-hd"><div><img src="hhf/logo-sem-slogan.png" alt="Hospital Helena Ferette"><div class="sl">Cuidado e carinho são a nossa missão</div></div>
+  <div class="rh-tag"><div class="t">FICHA FUNCIONAL</div><div class="n">HHF-${p.id}</div><div class="d">Departamento de Pessoal · uso interno</div></div></div>
+ <div class="rh-rule"></div>
+ <div class="rh-top"><div class="rh-ph">${p.cracha?`<img src="${p.cracha}" alt="Foto de ${p.nome}">`:`<b>${p.nome[0]}</b>`}<i>FOTO 3×4</i></div>
+  <div class="rh-who"><div class="k">NOME COMPLETO</div><h3 id="rh-name">${p.nome}</h3><div class="r">${p.cargo}</div>
+   <div class="rh-chips">${d.chips.map(c=>`<span>${c}</span>`).join('')}${d.warn?`<span class="w">${d.warn}</span>`:''}</div>
+   <div class="rh-bar"><i></i>HHF-${p.id}</div></div>
+  <div class="rh-stamp${d.w?' w':''}">${d.carimbo[0]}<small>${d.carimbo[1]}</small></div></div>
+ <div class="rh-sec"><h4>Dados pessoais</h4><div class="rh-grid">${fld('Idade',p.idade!=='—'?p.idade+' anos':'—')}${fld('Nascimento','__/__/____')}${fld('Naturalidade','—')}${fld('Contato de emergência',d.contato)}${fld('Telefone','Ramal '+p.id)}${fld('Estado civil','—')}</div></div>
+ <div class="rh-sec"><h4>Dados profissionais</h4><div class="rh-grid">${fld('Cargo',p.cargo)}${fld('Especialidade',p.esp)}${fld('Setor',p.setor)}${fld('CRM',d.crm)}${fld('Chefia imediata',d.chefia)}${fld('Equipe',d.equipe)}${fld('1ª admissão','—')}${fld('Readmissão',d.readm)}${fld('Regime',d.regime)}</div></div>
+ <div class="rh-sec"><h4>Observações do RH</h4><div class="rh-obs">${d.obs}</div></div>
+ <div class="rh-sign"><div><b>${(d.ass||['Dra. Lorena Ferette'])[0]}</b>${(d.ass||[,'Diretora geral'])[1]}</div><div><b>Departamento de Pessoal</b>Carimbo e assinatura</div></div>
+ <div class="rh-ft"><span>Av. Helena Ferette, 1000 · Centro</span><span>Documento confidencial</span><span>hospitalhelenaferette.com.br</span></div>
+ <div class="band"></div></article>`}
+const modal=document.getElementById('rh-modal');document.body.appendChild(modal);let fi=0,opener=null;
+function openFile(i){fi=(i+files.length)%files.length;const p=files[fi];
+ drawer.querySelectorAll('.folder').forEach(f=>f.classList.toggle('pulled',+f.dataset.i===fi));
+ const show=()=>{document.getElementById('rh-paper').innerHTML=ficha(p);document.getElementById('rh-ftab').textContent=p.nome;if(modal.hidden){opener=document.getElementById('pasta-'+p.id);modal.hidden=false;document.body.style.overflow='hidden'}
+  const paper=document.getElementById('rh-paper');paper.style.animation='none';paper.offsetHeight;paper.style.animation='';document.getElementById('rh-close').focus({preventScroll:true});modal.scrollTop=0};
+ if(modal.hidden&&!matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(show,260);else show();}
+function closeFile(){modal.hidden=true;document.body.style.overflow='';drawer.querySelectorAll('.folder').forEach(f=>f.classList.remove('pulled'));if(opener)opener.focus({preventScroll:true})}
+document.getElementById('rh-close').onclick=closeFile;document.getElementById('rh-back').onclick=closeFile;
+document.getElementById('rh-prev').onclick=()=>openFile(fi-1);document.getElementById('rh-next').onclick=()=>openFile(fi+1);
+addEventListener('keydown',e=>{if(modal.hidden)return;if(e.key==='Escape')closeFile();if(e.key==='ArrowRight')openFile(fi+1);if(e.key==='ArrowLeft')openFile(fi-1)});
+
+
+// abas
+const mainEl=document.querySelector('main'),hospEl=document.getElementById('hosp-view');
+function route(){const v=location.hash==='#hospital'?'hosp':location.hash==='#capitulos'?'caps':'sobre';
+  mainEl.hidden=v==='hosp';hospEl.hidden=v!=='hosp';document.body.classList.toggle('on-hosp',v==='hosp');document.body.classList.toggle('on-caps',v==='caps');
+  document.getElementById('t-fic').setAttribute('aria-selected',v==='sobre');document.getElementById('t-caps').setAttribute('aria-selected',v==='caps');document.getElementById('t-hosp').setAttribute('aria-selected',v==='hosp');}
+document.getElementById('t-fic').onclick=()=>{location.hash='sobre';scrollTo(0,0)};
+document.getElementById('t-caps').onclick=()=>{location.hash='capitulos';scrollTo(0,0)};
+document.getElementById('t-hosp').onclick=()=>{location.hash='hospital';scrollTo(0,0)};
+addEventListener('hashchange',()=>{route();scrollTo(0,0)});route();requestAnimationFrame(()=>scrollTo(0,0));
+</script>
+
+</body>
+</html>
